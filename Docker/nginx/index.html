@@ -1,10 +1,43 @@
 <!DOCTYPE html>
 <html>
-<body>
+  <head>
+    <title>CloudHobo Main Page</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-<h1>Ceci est un placeholder</h1>
+  <body>
+    <div class="main">
+      <h1>CloudHobo</h1>
+      <h3>Connexion</h3>
 
-<p>Je vais rajouter des trucs plus tard.</p>
-
-</body>
+      <form action="">
+        <label for="username"> Nom d'utilisateur: </label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          placeholder="Nom d'utilisateur"
+          required
+        />
+        <br />
+        <label for="password"> Mot de passe: </label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Mot de passe"
+          required
+        />
+        <br />
+        <div class="wrap">
+          <button type="submit">Envoyer</button>
+        </div>
+      </form>
+      <p>
+            <a href="accountCreation.html">
+                <button type="submit">Créer un compte</button> 
+            </a>
+      </p>
+    </div>
+  </body>
 </html>

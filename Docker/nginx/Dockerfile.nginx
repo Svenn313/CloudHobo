@@ -6,4 +6,5 @@ RUN mv /etc/nginx/http.d/default.conf /etc/nginx/http.d/default.conf.bak
 
 
 COPY ./nginx.conf /etc/nginx/http.d/default.conf
-COPY ./index.html /var/www/CloudHobo/index.html
+COPY ./*.html /var/www/CloudHobo/
+COPY ./*.css /var/www/CloudHobo/
