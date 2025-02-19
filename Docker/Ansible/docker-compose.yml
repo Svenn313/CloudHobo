@@ -1,0 +1,10 @@
+services:
+  ansible:
+    build:
+      dockerfile: Dockerfile.ansible
+    container_name: CHansible
+    entrypoint: sleep 1000000
+    ports:
+      - 22:22
+    restart: unless-stopped
+    network_mode: "host"
