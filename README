@@ -1,12 +1,2 @@
 ToDo list :
 
-- [TERRAFORM] : Mise en place du fichier de création d'instance
-- [DOCKER]    : Création du conteneur nginx (avec un petit placeholder)
-- [DOCKER]    : Création du conteneur pour la database
-- [DOCKER]    : Création du conteneur pour le jeu
-- [ANSIBLE]   : Création des playbooks pour gerer les conteneurs
-- [HTML]      : Développement d'une page avec login
-- [DATABASE]  : Stockage du login/password
-- [PYTHON]    : Création du jeu (pas sur de quoi encore, mais un truc simple parce que osef de fou)
-- [DATABASE]  : Stockage du record sur le jeu
-- [TERAFORM]  : On envoie tout ça dans l'instance
