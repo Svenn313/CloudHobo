@@ -5,6 +5,6 @@ RUN apk add nginx
 RUN mv /etc/nginx/http.d/default.conf /etc/nginx/http.d/default.conf.bak
 
 
-COPY ./nginx.conf /etc/nginx/http.d/default.conf
-COPY ./sites/*.html /var/www/CloudHobo/
-COPY ./sites/*.css /var/www/CloudHobo/
+COPY ./nginx/nginx.conf /etc/nginx/http.d/default.conf
+COPY ./nginx/sites/*.html /var/www/CloudHobo/
+COPY ./nginx/sites/*.css /var/www/CloudHobo/

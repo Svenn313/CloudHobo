@@ -1,5 +1,2 @@
-services:
-    ansible:
-      build:
-        dockerfile: Dockerfile.linkding
-      container_name: CHlinkding
+FROM sissbruecker/linkding
+
