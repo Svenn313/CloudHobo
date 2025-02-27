@@ -1,0 +1,58 @@
+services:
+  ansible:
+    build:
+      dockerfile: /Ansible/Dockerfile.ansible
+    container_name: CHansible
+    entrypoint: sleep 1000000
+    ports:
+      - 22:22
+    restart: unless-stopped
+    network_mode: "host"
+  nginx:
+    build:
+      dockerfile: /nginx/Dockerfile.nginx
+    container_name: CHnginx
+    entrypoint: nginx -g "daemon off;"
+    ports:
+      - 8080:8080
+    restart: unless-stopped
+    network_mode: "host"
+  vaultwarden:
+    build:
+      dockerfile: /Vaultwarden/Dockerfile.vaultwarden
+    container_name: CHvaultwarden
+    volume:
+    - /Vaultwarden/Volumes/vw-data:/data/
+    ports:
+    - 80:80
+  synchting:
+    build:
+      dockerfile: /Syncthing/Dockerfile.synchting
+    image: lscr.io/linuxserver/syncthing:latest
+    container_name: CHsyncthing
+    hostname: syncthing #optional
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - /Synchthing/Volumes/syncthing-data:/config
+    ports:
+      - 8384:8384
+      - 22000:22000/tcp
+      - 22000:22000/udp
+      - 21027:21027/udp
+    restart: unless-stopped
+  paperless:
+    image: paperlessngx/paperless-ngx
+    build:
+      dockerfile: /PaperlessNGX/Dockerfile.paperless
+    container_name: CHpaperless
+  linkding:
+    image: sissbruecker/linkding
+    build:
+      dockerfile: /Linkding/Dockerfile.linkding
+    container_name: CHlinkding
+
+
+
