@@ -23,10 +23,12 @@ services:
     image: vaultwarden/server
     container_name: CHvaultwarden
     volumes:
-    - /Vaultwarden/Volumes/vw-data:/data
+    - type: bind
+      source: ./Vaultwarden/Volumes
+      target: /data
     ports:
     - 8540:80
-  synchting:
+  syncthing:
     #build:
       #dockerfile: ./Syncthing/Dockerfile.synchting
     image: lscr.io/linuxserver/syncthing:latest
@@ -37,7 +39,9 @@ services:
       - PGID=1000
       - TZ=Etc/UTC
     volumes:
-      - /Synchthing/Volumes/syncthing-data:/config
+      - type: bind
+        source: ./Syncthing/Volumes
+        target: /config
     ports:
       - 8384:8384
       - 22000:22000/tcp
@@ -58,7 +62,9 @@ services:
       #dockerfile: ./Linkding/Dockerfile.linkding
     container_name: CHlinkding
     volumes:
-      - /Linkding/Volumes/linkding-data:/linkding
+      - type: bind
+        source: ./Linkding/Volumes
+        target: /config
     ports:
       - 9090:9090
     env_file:
