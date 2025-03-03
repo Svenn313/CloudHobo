@@ -18,7 +18,7 @@ services:
    ports:
      - 8080:8080
    restart: unless-stopped
-   network_mode: "host"
+   network_mode: host
 ##VAULTWARDEN##
   vaultwarden:
    #build:
@@ -92,6 +92,8 @@ services:
 ##GRAFANA##
   grafana:
     image: grafana/grafana-enterprise
+    build:
+      dockerfile: ./Grafana/Dockerfile.grafana
     container_name: CHgrafana
     restart: unless-stopped
     user: '0'
@@ -99,7 +101,7 @@ services:
       - '3000:3000'
     volumes:
       - './Grafana/Volumes:/var/lib/grafana'
-##PORTAINER
+##PORTAINER##
   portainer-ce:
     container_name: CHportainer
     ports:
@@ -110,7 +112,8 @@ services:
       - ./Portainer/Volumes/data:/data
     restart: always
     image: portainer/portainer-ce
-
+    env_file:
+      - ./Grafana/secrets.env
 
 ##MISC##
 volumes:

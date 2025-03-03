@@ -1,3 +1,4 @@
-FROM grafana/grafana-enterprise:11.5
+FROM grafana/grafana-enterprise
 
-RUN 
+RUN grafana cli admin reset-admin-password $GF_ADMIN_PWD
+RUN unset GF_ADMIN_PWD
