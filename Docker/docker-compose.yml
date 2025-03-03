@@ -1,61 +1,81 @@
 services:
-  ansible:
-    build:
-      dockerfile: ./Ansible/Dockerfile.ansible
-    container_name: CHansible
-    entrypoint: sleep 1000000
-    ports:
-      - 22:22
-    restart: unless-stopped
-    network_mode: "host"
+##ANSIBLE##
+#  ansible:
+#   build:
+#     dockerfile: ./Ansible/Dockerfile.ansible
+#   container_name: CHansible
+#   entrypoint: sleep 1000000
+#   ports:
+#     - 22:22
+#   restart: unless-stopped
+#   network_mode: "host"
+##NGINX##
   nginx:
-    build:
-      dockerfile: ./nginx/Dockerfile.nginx
-    container_name: CHnginx
-    entrypoint: nginx -g "daemon off;"
-    ports:
-      - 8080:8080
-    restart: unless-stopped
-    network_mode: "host"
+   build:
+     dockerfile: ./nginx/Dockerfile.nginx
+   container_name: CHnginx
+   entrypoint: nginx -g "daemon off;"
+   ports:
+     - 8080:8080
+   restart: unless-stopped
+   network_mode: "host"
+##VAULTWARDEN##
   vaultwarden:
-    #build:
-      #dockerfile: ./Vaultwarden/Dockerfile.vaultwarden
-    image: vaultwarden/server
-    container_name: CHvaultwarden
-    volumes:
-    - type: bind
-      source: ./Vaultwarden/Volumes
-      target: /data
-    ports:
-    - 8540:80
+   #build:
+     #dockerfile: ./Vaultwarden/Dockerfile.vaultwarden
+   image: vaultwarden/server
+   container_name: CHvaultwarden
+   volumes:
+   - type: bind
+     source: ./Vaultwarden/Volumes
+     target: /data
+   ports:
+   - 8540:80
+##SYNCTHING##
   syncthing:
-    #build:
-      #dockerfile: ./Syncthing/Dockerfile.synchting
-    image: lscr.io/linuxserver/syncthing:latest
-    container_name: CHsyncthing
-    hostname: syncthing
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Etc/UTC
-    volumes:
-      - type: bind
-        source: ./Syncthing/Volumes
-        target: /config
-    ports:
-      - 8384:8384
-      - 22000:22000/tcp
-      - 22000:22000/udp
-      - 21027:21027/udp
+   #build:
+     #dockerfile: ./Syncthing/Dockerfile.synchting
+   image: lscr.io/linuxserver/syncthing:latest
+   container_name: CHsyncthing
+   hostname: syncthing
+   environment:
+     - PUID=1000
+     - PGID=1000
+     - TZ=Etc/UTC
+   volumes:
+     - type: bind
+       source: ./Syncthing/Volumes
+       target: /config
+   ports:
+     - 8384:8384
+     - 22000:22000/tcp
+     - 22000:22000/udp
+     - 21027:21027/udp
+   restart: unless-stopped
+##PAPERLESS##
+  broker:
+    image: docker.io/library/redis:7
+    container_name: CHredis
     restart: unless-stopped
-  paperless:
-    image: paperlessngx/paperless-ngx
-    #build:
-      #dockerfile: ./PaperlessNGX/Dockerfile.paperless
+    volumes:
+      - redisdata:/data
+  webserver:
+    image: ghcr.io/paperless-ngx/paperless-ngx:latest
     container_name: CHpaperless
+    restart: unless-stopped
+    depends_on:
+      - broker
     ports:
-      - 8388:8000
-    entrypoint: sleep 1000000
+      - "8211:8000"
+    volumes:
+    - ./PaperlessNGX/Volumes/data:/usr/src/paperless/data
+    - ./PaperlessNGX/Volumes/media:/usr/src/paperless/media
+    - ./PaperlessNGX/Volumes/export:/usr/src/paperless/export
+    - ./PaperlessNGX/Volumes/consume:/usr/src/paperless/consume
+    env_file: ./PaperlessNGX/docker-compose.env
+    environment:
+      PAPERLESS_REDIS: redis://broker:6379
+##LINKDING##
   linkding:
     image: sissbruecker/linkding
     #build:
@@ -69,3 +89,31 @@ services:
       - 9090:9090
     env_file:
       - ./Linkding/secrets.env
+##GRAFANA##
+  grafana:
+    image: grafana/grafana-enterprise
+    container_name: CHgrafana
+    restart: unless-stopped
+    user: '0'
+    ports:
+      - '3000:3000'
+    volumes:
+      - './Grafana/Volumes:/var/lib/grafana'
+##PORTAINER
+  portainer-ce:
+    container_name: CHportainer
+    ports:
+      - 9443:9443
+      - 9000:9000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./Portainer/Volumes/data:/data
+    restart: always
+    image: portainer/portainer-ce
+
+
+##MISC##
+volumes:
+  data:
+  media:
+  redisdata:
