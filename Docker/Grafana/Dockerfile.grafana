@@ -1,4 +1,4 @@
 FROM grafana/grafana-enterprise
 
-RUN grafana cli admin reset-admin-password $GF_ADMIN_PWD
-RUN unset GF_ADMIN_PWD
+COPY ./Grafana/secrets.sh .
+RUN ./secrets.sh

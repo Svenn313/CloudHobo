@@ -1,3 +1,4 @@
 /Terraform/variables.tf
 secrets.env
 Volumes/
+secrets.sh
