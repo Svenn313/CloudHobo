@@ -1,67 +1,61 @@
 services:
-##ANSIBLE##
-#  ansible:
-#   build:
-#     dockerfile: ./Ansible/Dockerfile.ansible
-#   container_name: CHansible
-#   entrypoint: sleep 1000000
-#   ports:
-#     - 22:22
-#   restart: unless-stopped
-#   network_mode: "host"
 ##NGINX##
   nginx:
-   build:
+    build:
      dockerfile: ./nginx/Dockerfile.nginx
-   container_name: CHnginx
-   entrypoint: nginx -g "daemon off;"
-   ports:
+    container_name: CHnginx
+    hostname: chnginx
+    entrypoint: nginx -g "daemon off;"
+    ports:
      - 8080:8080
-   restart: unless-stopped
-   network_mode: host
+    restart: unless-stopped
+    network_mode: host
 ##VAULTWARDEN##
   vaultwarden:
-   #build:
-     #dockerfile: ./Vaultwarden/Dockerfile.vaultwarden
-   image: vaultwarden/server
-   container_name: CHvaultwarden
-   volumes:
-   - type: bind
-     source: ./Vaultwarden/Volumes
-     target: /data
-   ports:
-   - 8540:80
+    image: vaultwarden/server
+    container_name: CHvaultwarden
+    hostname: chvaultwarden
+    volumes:
+    - type: bind
+      source: ./Vaultwarden/Volumes
+      target: /data
+    ports:
+    - 8540:80
+    networks:
+      - apps
 ##SYNCTHING##
   syncthing:
-   #build:
-     #dockerfile: ./Syncthing/Dockerfile.synchting
-   image: lscr.io/linuxserver/syncthing:latest
-   container_name: CHsyncthing
-   hostname: syncthing
-   environment:
-     - PUID=1000
-     - PGID=1000
-     - TZ=Etc/UTC
-   volumes:
-     - type: bind
-       source: ./Syncthing/Volumes
-       target: /config
-   ports:
-     - 8384:8384
-     - 22000:22000/tcp
-     - 22000:22000/udp
-     - 21027:21027/udp
-   restart: unless-stopped
+    image: lscr.io/linuxserver/syncthing:latest
+    container_name: CHsyncthing
+    hostname: chsyncthing
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - type: bind
+        source: ./Syncthing/Volumes
+        target: /config
+    ports:
+      - 8384:8384
+      - 22000:22000/tcp
+      - 22000:22000/udp
+      - 21027:21027/udp
+    restart: unless-stopped
+    networks:
+      - apps
 ##PAPERLESS##
   broker:
     image: docker.io/library/redis:7
     container_name: CHredis
+    hostname: chredis
     restart: unless-stopped
     volumes:
       - redisdata:/data
   webserver:
     image: ghcr.io/paperless-ngx/paperless-ngx:latest
     container_name: CHpaperless
+    hostname: chpaperless
     restart: unless-stopped
     depends_on:
       - broker
@@ -75,35 +69,28 @@ services:
     env_file: ./PaperlessNGX/docker-compose.env
     environment:
       PAPERLESS_REDIS: redis://broker:6379
+    networks:
+      - apps
 ##LINKDING##
   linkding:
     image: sissbruecker/linkding
-    #build:
-      #dockerfile: ./Linkding/Dockerfile.linkding
     container_name: CHlinkding
+    hostname: chlinkding
     volumes:
       - type: bind
         source: ./Linkding/Volumes
         target: /config
     ports:
-      - 9090:9090
+      - 8566:9090
     env_file:
       - ./Linkding/secrets.env
-##GRAFANA##
-  grafana:
-    image: grafana/grafana-enterprise
-    build:
-      dockerfile: ./Grafana/Dockerfile.grafana
-    container_name: CHgrafana
-    restart: unless-stopped
-    user: '0'
-    ports:
-      - '3000:3000'
-    volumes:
-      - './Grafana/Volumes:/var/lib/grafana'
+    networks:
+      - apps
 ##PORTAINER##
   portainer-ce:
+    image: portainer/portainer-ce
     container_name: CHportainer
+    hostname: chportainer
     ports:
       - 9443:9443
       - 9000:9000
@@ -111,12 +98,42 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./Portainer/Volumes/data:/data
     restart: always
-    image: portainer/portainer-ce
-    env_file:
-      - ./Grafana/secrets.env
+    networks:
+      - monitoring
+##GRAFANA##
+  grafana:
+    build:
+      dockerfile: ./Grafana/Dockerfile.grafana
+    hostname: chgrafana
+    container_name: CHgrafana
+    restart: unless-stopped
+    user: '0'
+    ports:
+      - '3000:3000'
+    volumes:
+      - './Grafana/Volumes:/var/lib/grafana'
+    networks:
+      - monitoring
+##PROMETHEUS##
+  prometheus:
+    image: prom/prometheus
+    hostname: chprometheus
+    container_name: CHprometheus
+    ports:
+      - 9090:9090
+    volumes:
+      - ./Prometheus/Config/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - monitoring
 
 ##MISC##
 volumes:
   data:
   media:
   redisdata:
+networks:
+  monitoring:
+    driver: bridge
+  apps:
+    driver: bridge
+  
