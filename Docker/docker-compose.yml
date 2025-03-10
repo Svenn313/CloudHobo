@@ -1,15 +1,4 @@
 services:
-##NGINX##
-  nginx:
-    build:
-     dockerfile: ./nginx/Dockerfile.nginx
-    container_name: CHnginx
-    hostname: chnginx
-    entrypoint: nginx -g "daemon off;"
-    ports:
-     - 8080:8080
-    restart: unless-stopped
-    network_mode: host
 ##VAULTWARDEN##
   vaultwarden:
     image: vaultwarden/server
@@ -20,9 +9,10 @@ services:
       source: ./Vaultwarden/Volumes
       target: /data
     ports:
-    - 8540:80
+    - 8540:8080
     networks:
       - apps
+
 ##SYNCTHING##
   syncthing:
     image: lscr.io/linuxserver/syncthing:latest
@@ -44,33 +34,7 @@ services:
     restart: unless-stopped
     networks:
       - apps
-##PAPERLESS##
-  broker:
-    image: docker.io/library/redis:7
-    container_name: CHredis
-    hostname: chredis
-    restart: unless-stopped
-    volumes:
-      - redisdata:/data
-  webserver:
-    image: ghcr.io/paperless-ngx/paperless-ngx:latest
-    container_name: CHpaperless
-    hostname: chpaperless
-    restart: unless-stopped
-    depends_on:
-      - broker
-    ports:
-      - "8211:8000"
-    volumes:
-    - ./PaperlessNGX/Volumes/data:/usr/src/paperless/data
-    - ./PaperlessNGX/Volumes/media:/usr/src/paperless/media
-    - ./PaperlessNGX/Volumes/export:/usr/src/paperless/export
-    - ./PaperlessNGX/Volumes/consume:/usr/src/paperless/consume
-    env_file: ./PaperlessNGX/docker-compose.env
-    environment:
-      PAPERLESS_REDIS: redis://broker:6379
-    networks:
-      - apps
+
 ##LINKDING##
   linkding:
     image: sissbruecker/linkding
@@ -86,8 +50,40 @@ services:
       - ./Linkding/secrets.env
     networks:
       - apps
-##PORTAINER##
-  portainer-ce:
+
+##PROMETHEUS##
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: CHprometheus
+    hostname: chprometheus
+    ports:
+    - 9090:9090
+    command:
+    - --config.file=/etc/prometheus/prometheus.yml
+    volumes:
+    - ./Prometheus/Config/prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+    - cadvisor
+    networks:
+      - monitoring
+
+##CADVISOR##
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: CHcadvisor
+    hostname: chcadvisor
+    ports:
+    - 8080:8080
+    volumes:
+    - /:/rootfs:ro
+    - /var/run:/var/run:rw
+    - /sys:/sys:ro
+    - /var/lib/docker/:/var/lib/docker:ro
+    networks:
+      - monitoring
+  
+  ##PORTAINER##
+  portainer:
     image: portainer/portainer-ce
     container_name: CHportainer
     hostname: chportainer
@@ -100,6 +96,7 @@ services:
     restart: always
     networks:
       - monitoring
+
 ##GRAFANA##
   grafana:
     build:
@@ -114,26 +111,10 @@ services:
       - './Grafana/Volumes:/var/lib/grafana'
     networks:
       - monitoring
-##PROMETHEUS##
-  prometheus:
-    image: prom/prometheus
-    hostname: chprometheus
-    container_name: CHprometheus
-    ports:
-      - 9090:9090
-    volumes:
-      - ./Prometheus/Config/prometheus.yml:/etc/prometheus/prometheus.yml
-    networks:
-      - monitoring
 
 ##MISC##
-volumes:
-  data:
-  media:
-  redisdata:
 networks:
   monitoring:
     driver: bridge
   apps:
     driver: bridge
-  
