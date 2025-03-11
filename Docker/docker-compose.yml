@@ -1,21 +1,21 @@
 services:
 ##VAULTWARDEN##
   vaultwarden:
-    image: vaultwarden/server
+    image: vaultwarden/server:1.33.2
     container_name: CHvaultwarden
     hostname: chvaultwarden
     volumes:
     - type: bind
-      source: ./Vaultwarden/Volumes
-      target: /data
+    source: ./Vaultwarden/Volumes
+    target: /data
     ports:
-    - 8540:8080
+      - 8540:8080
     networks:
       - apps
 
 ##SYNCTHING##
   syncthing:
-    image: lscr.io/linuxserver/syncthing:latest
+    image: lscr.io/linuxserver/syncthing
     container_name: CHsyncthing
     hostname: chsyncthing
     environment:
@@ -53,7 +53,7 @@ services:
 
 ##PROMETHEUS##
   prometheus:
-    image: prom/prometheus:latest
+    image: prom/prometheus
     container_name: CHprometheus
     hostname: chprometheus
     ports:
@@ -69,7 +69,7 @@ services:
 
 ##CADVISOR##
   cadvisor:
-    image: gcr.io/cadvisor/cadvisor:latest
+    image: gcr.io/cadvisor/cadvisor
     container_name: CHcadvisor
     hostname: chcadvisor
     ports:
@@ -82,7 +82,7 @@ services:
     networks:
       - monitoring
   
-  ##PORTAINER##
+##PORTAINER##
   portainer:
     image: portainer/portainer-ce
     container_name: CHportainer
