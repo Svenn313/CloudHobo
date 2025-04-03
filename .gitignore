@@ -1,40 +1,22 @@
 ## ANSIBLE ##
 ansible.cfg
 inventory.yml
-
-# Retry files
 .retry
 *.retry
-
-# Temporary files
 *.tmp
 *.swp
-
-# Cache directory
 .cache/
-
-# Private keys and certificates
 *.pem
 *.key
 *.crt
-
-# Sensitive variables
 group_vars/
 host_vars/
-
-# Log and output files
 *.log
 *.out
-
-# Virtual environments
 venv/
 .venv/
-
-# Editor configuration
 .vscode/
 .idea/
-
-# Generated documentation
 docs/
 
 ## DOCKER ##
@@ -43,14 +25,9 @@ docs/
 *.env
 
 ## TERRAFORM ##
-# Local .terraform directories
 **/.terraform/*
-
-# .tfstate files
 *.tfstate
 *.tfstate.*
-
-# Crash log files
 crash.log
 crash.*.log
 
