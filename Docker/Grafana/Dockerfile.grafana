@@ -1,4 +1,0 @@
-FROM grafana/grafana-enterprise
-
-COPY ./Grafana/secrets.sh .
-RUN ./secrets.sh

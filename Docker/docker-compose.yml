@@ -3,114 +3,201 @@ services:
   vaultwarden:
     image: vaultwarden/server:1.33.2
     container_name: CHvaultwarden
-    hostname: chvaultwarden
-    volumes:
-    - type: bind
-    source: ./Vaultwarden/Volumes
-    target: /data
-    ports:
-      - 8540:8080
-    networks:
-      - apps
-
-##SYNCTHING##
-  syncthing:
-    image: lscr.io/linuxserver/syncthing
-    container_name: CHsyncthing
-    hostname: chsyncthing
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Etc/UTC
-    volumes:
-      - type: bind
-        source: ./Syncthing/Volumes
-        target: /config
-    ports:
-      - 8384:8384
-      - 22000:22000/tcp
-      - 22000:22000/udp
-      - 21027:21027/udp
     restart: unless-stopped
+    environment:
+      - DOMAIN=https://vaultwarden.${DOMAIN_NAME}
+      - ROCKET_TLS={certs="/ssl/certs.pem",key="/ssl/privkey.pem"}
+      - ADMIN_TOKEN=${VAULTWARDEN_ADMIN_TOKEN}
+    volumes:
+      - './Vaultwarden/Volumes:/data'
+      - '${SSL_FULLCHAIN_PATH}:/ssl/certs.pem:ro'
+      - '${SSL_KEY_PATH}:/ssl/privkey.pem:ro'
+    ports:
+      - 6010:80
     networks:
       - apps
 
-##LINKDING##
-  linkding:
-    image: sissbruecker/linkding
-    container_name: CHlinkding
-    hostname: chlinkding
+##HEDGEDOC##
+  hedgedoc:
+    image: quay.io/hedgedoc/hedgedoc:1.10.2
+    container_name: CHhedge
+    restart: unless-stopped
+    environment:
+      - CMD_DOMAIN=hedge.${DOMAIN_NAME}
+      - CMD_URL_ADDPORT=false
+      - CMD_PORT=3000
+      - CMD_PROTOCOL_USESSL=true
+      - CMD_DB_DIALECT=postgres
+      - CMD_DB_URL=postgres://${HD_DATABASE_NAME}:${HD_DATABASE_PASS}@${HOST_URL}:5432/hedgedoc
+      - CMD_DB_HOST=${HOST_URL}
+      - CMD_DB_DATABASE=${HD_DATABASE_NAME}
+      - CMD_DB_PORT=5432
+      - CMD_DB_USER=${HD_DATABASE_USER}
+      - CMD_DB_PASS=${HD_DATABASE_PASS}
     volumes:
-      - type: bind
-        source: ./Linkding/Volumes
-        target: /config
+      - './Hedgedoc/Volumes:/hedgedoc/public/uploads'
     ports:
-      - 8566:9090
-    env_file:
-      - ./Linkding/secrets.env
+      - "6020:3000"
+    depends_on:
+      - postgres
+    networks:
+       - apps
+
+##POSTGRES##
+  postgres:
+    image: postgres:13.4-alpine
+    container_name: CHpostgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASS}
+      - POSTGRES_DB=hedgedoc 
+    volumes:
+      - './Postgres/Volumes:/var/lib/postgresql/data'
+    ports:
+      - 5432:5432
+    networks:
+       - apps
+
+##MEALIE##
+  mealie:
+    image: ghcr.io/mealie-recipes/mealie:v2.8.0
+    container_name: CHmealie
+    restart: unless-stopped
+    ports:
+      - 6030:9000
+    deploy:
+      resources:
+        limits:
+          memory: 1000M
+    volumes:
+      - './Mealie/Volumes:/app/data/'
+      - '${SSL_CERT_PATH}:/app/ssl/cert.pem'
+      - '${SSL_KEY_PATH}:/app/ssl/key.pem'
+    environment:
+      # Set Backend ENV Variables Here
+      ALLOW_SIGNUP: "false"
+      PUID: 1000
+      PGID: 1000
+      TLS_CERTIFICATE_PATH: /app/ssl/cert.pem
+      TLS_PRIVATE_KEY_PATH: /app/ssl/key.pem
+      TZ: Europe/Paris
+      BASE_URL: https://mealie.svenlabs.fr
+
+##PI-HOLE##
+  pihole:
+    image: pihole/pihole:2025.03.0
+    container_name: CHpihole
+    restart: unless-stopped
+    ports:
+    # Default HTTP Port
+      - 6042:80/tcp
+    # Default HTTPs Port. FTL will generate a self-signed certificate
+      - 6043:443/tcp
+    # DNS Ports
+      - 6040:53/tcp
+      - 6041:53/udp
+    # Uncomment the below if using Pi-hole as your DHCP Server
+    # - 6044:67/udp
+    environment:
+    # Set the appropriate timezone for your location (https://en.wikipedia.org/wiki/List_of_tz_database_time_zones), e.g:
+      TZ: 'Europe/Paris'
+    # Set a password to access the web interface. Not setting one will result in a random password being assigned
+      FTLCONF_webserver_api_password: ${PIHOLE_API_PASSWORD}
+      WEBPASSWORD : ${PIHOLE_WEB_PASSWORD}
+    # Volumes store your data between container upgrades
+    volumes:
+    # For persisting Pi-hole's databases and common configuration file
+      - './Pi-hole/Volumes:/etc/pihole'
+    networks:
+       - apps
+
+##PORTAINER##
+  portainer:
+    image: portainer/portainer-ce:2.27.3
+    container_name: CHportainer
+    restart: unless-stopped
+    ports:
+      - 6050:9443
+      - 6051:9000
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+      - './Portainer/Volumes/data:/data'
     networks:
       - apps
 
 ##PROMETHEUS##
   prometheus:
-    image: prom/prometheus
+    image: prom/prometheus:v2.53.4
     container_name: CHprometheus
-    hostname: chprometheus
+    restart: unless-stopped
     ports:
-    - 9090:9090
+      - 7010:9090
     command:
-    - --config.file=/etc/prometheus/prometheus.yml
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --web.config.file=/etc/prometheus/web.yml
     volumes:
-    - ./Prometheus/Config/prometheus.yml:/etc/prometheus/prometheus.yml
+      - './Prometheus/Config/prometheus.yml:/etc/prometheus/prometheus.yml'
+      - './Prometheus/Config/web.yml:/etc/prometheus/web.yml'
+      - '${SSL_CERT_PATH}:/app/ssl/cert.pem'
+      - '${SSL_KEY_PATH}:/app/ssl/key.pem'
     depends_on:
-    - cadvisor
-    networks:
-      - monitoring
-
-##CADVISOR##
-  cadvisor:
-    image: gcr.io/cadvisor/cadvisor
-    container_name: CHcadvisor
-    hostname: chcadvisor
-    ports:
-    - 8080:8080
-    volumes:
-    - /:/rootfs:ro
-    - /var/run:/var/run:rw
-    - /sys:/sys:ro
-    - /var/lib/docker/:/var/lib/docker:ro
+      - cadvisor
     networks:
       - monitoring
   
-##PORTAINER##
-  portainer:
-    image: portainer/portainer-ce
-    container_name: CHportainer
-    hostname: chportainer
+##CADVISOR##
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.52.1
+    container_name: CHcadvisor
+    restart: unless-stopped
     ports:
-      - 9443:9443
-      - 9000:9000
+      - 7020:8080
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./Portainer/Volumes/data:/data
-    restart: always
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
     networks:
       - monitoring
-
+  
 ##GRAFANA##
   grafana:
-    build:
-      dockerfile: ./Grafana/Dockerfile.grafana
-    hostname: chgrafana
+    image : grafana/grafana-enterprise:11.6.0
     container_name: CHgrafana
+    environment:
+      - GF_SERVER_PROTOCOL=https
+      - GF_SERVER_CERT_FILE=/app/ssl/cert.pem
+      - GF_SERVER_CERT_KEY=/app/ssl/key.pem
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAF_ADMIN_PASSWORD}
     restart: unless-stopped
     user: '0'
     ports:
-      - '3000:3000'
+      - 7030:3000
     volumes:
       - './Grafana/Volumes:/var/lib/grafana'
+      - '${SSL_CERT_PATH}:/app/ssl/cert.pem'
+      - '${SSL_KEY_PATH}:/app/ssl/key.pem'
     networks:
       - monitoring
+
+##HEIMDALL##
+  heimdall:
+    image: lscr.io/linuxserver/heimdall:latest
+    container_name: CHheimdall
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Paris
+    volumes:
+      - './Heimdall/Volumes/Config:/config'
+      - '${SSL_CERT_PATH}:/config/keys/cert.pem'
+      - '${SSL_KEY_PATH}:/config/keys/key.pem'
+    ports:
+      - 7040:443
+      - 7041:80
 
 ##MISC##
 networks:

@@ -1,0 +1,30 @@
+# installDocker.yml
+- name: Install Docker
+  become: yes
+  hosts: all
+  tasks:
+  - name: Install Dependencies
+    ansible.builtin.package:
+      name: 
+        - curl
+        - apt-transport-https
+        - ca-certificates
+        - software-properties-common
+        - rsync
+      state: present
+  - name: Add Docker's official GPG key
+    become : true
+    ansible.builtin.shell: install -m 0755 -d /etc/apt/keyrings
+    ansible.builtin.shell: curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor --yes -o /etc/apt/keyrings/docker.gpg
+  - name: Change permission to the docker key  
+    ansible.builtin.shell: chmod a+r /etc/apt/keyrings/docker.gpg
+  - name: Add the repository to apt sources
+    ansible.builtin.shell: echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null && apt-get update
+  - name: Install Docker
+    ansible.builtin.package:
+      name: 
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+        - docker-buildx-plugin
+        - docker-compose-plugin

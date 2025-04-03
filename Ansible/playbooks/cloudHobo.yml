@@ -1,0 +1,18 @@
+# cloudHobo.yml
+- name: Copy, Install and deploy CloudHobo stack
+  become: yes
+  hosts: all
+  tasks:
+  - name: Synchronize local directory to remote directory
+    ansible.builtin.synchronize:
+      src: ../../Docker/
+      dest: /opt/CloudHobo/Docker/
+      recursive: yes
+      rsync_opts:
+        - "--exclude=.git" 
+  - name: launch Docker-compose file
+    community.docker.docker_compose_v2:
+        project_src: /opt/CloudHobo/Docker
+        files:
+          - docker-compose.yml
+        state: present
