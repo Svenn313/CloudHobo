@@ -9,7 +9,7 @@ terraform {
 provider "scaleway" {
   access_key      = var.access_key
   secret_key      = var.secret_key
-  project_id	    = "432b9225-791b-449f-ad8f-dfbd99353d36"
+  project_id      = "432b9225-791b-449f-ad8f-dfbd99353d36"
   zone            = "nl-ams-1"
   region          = "nl-ams"
 }
