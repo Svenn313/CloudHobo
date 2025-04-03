@@ -1,0 +1,18 @@
+# sudoConfig.yml
+- name: Ping check
+  hosts: scaleway
+  tasks:
+   - name: Ping my hosts
+     ansible.builtin.ping:
+
+- name: Modifier le fichier sudoers pour le groupe ansible
+  hosts: all
+  become: yes
+  tasks:
+    - name: Ajouter une ligne pour le groupe ansible dans sudoers
+      lineinfile:
+        path: /etc/sudoers
+        state: present
+        regexp: '^%ansible'
+        line: '%ansible ALL=(ALL) NOPASSWD: ALL'
+        validate: 'visudo -cf %s'
