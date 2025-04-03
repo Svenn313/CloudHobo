@@ -17,8 +17,8 @@ provider "scaleway" {
 resource "scaleway_instance_ip" "public_ip" {}
 
 resource "scaleway_instance_volume" "data" {
-  size_in_gb = 10
-  type = "l_ssd"
+  size_in_gb  = 10
+  type        = "l_ssd"
 }
 
 resource "scaleway_instance_server" "my-instance" {
