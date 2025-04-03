@@ -22,6 +22,7 @@ docs/
 ## DOCKER ##
 *Volumes/
 *secrets.sh
+.env
 *.env
 
 ## TERRAFORM ##
