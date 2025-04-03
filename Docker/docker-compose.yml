@@ -75,7 +75,6 @@ services:
       - '${SSL_CERT_PATH}:/app/ssl/cert.pem'
       - '${SSL_KEY_PATH}:/app/ssl/key.pem'
     environment:
-      # Set Backend ENV Variables Here
       ALLOW_SIGNUP: "false"
       PUID: 1000
       PGID: 1000
@@ -90,24 +89,16 @@ services:
     container_name: CHpihole
     restart: unless-stopped
     ports:
-    # Default HTTP Port
       - 6042:80/tcp
-    # Default HTTPs Port. FTL will generate a self-signed certificate
       - 6043:443/tcp
-    # DNS Ports
       - 6040:53/tcp
       - 6041:53/udp
-    # Uncomment the below if using Pi-hole as your DHCP Server
-    # - 6044:67/udp
+    # - 6044:67/udp # DHCP
     environment:
-    # Set the appropriate timezone for your location (https://en.wikipedia.org/wiki/List_of_tz_database_time_zones), e.g:
       TZ: 'Europe/Paris'
-    # Set a password to access the web interface. Not setting one will result in a random password being assigned
       FTLCONF_webserver_api_password: ${PIHOLE_API_PASSWORD}
       WEBPASSWORD : ${PIHOLE_WEB_PASSWORD}
-    # Volumes store your data between container upgrades
     volumes:
-    # For persisting Pi-hole's databases and common configuration file
       - './Pi-hole/Volumes:/etc/pihole'
     networks:
        - apps
@@ -145,7 +136,7 @@ services:
       - cadvisor
     networks:
       - monitoring
-  
+
 ##CADVISOR##
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:v0.52.1
@@ -160,7 +151,7 @@ services:
       - /var/lib/docker/:/var/lib/docker:ro
     networks:
       - monitoring
-  
+
 ##GRAFANA##
   grafana:
     image : grafana/grafana-enterprise:11.6.0
