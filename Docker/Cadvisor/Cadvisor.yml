@@ -1,0 +1,23 @@
+##CADVISOR##
+services:
+  cadvisor:
+   image: gcr.io/cadvisor/cadvisor:latest
+   container_name: cadvisor_CH
+   restart: unless-stopped
+   ports:
+     - 7020:8080
+   volumes:
+     - /:/rootfs:ro
+     - /var/run/docker.sock:/var/run/docker.sock:ro
+     - /var/run:/var/run:rw
+     - /sys:/sys:ro
+     - /var/lib/docker:/var/lib/docker:ro
+     - /sys/fs/cgroup:/cgroup:ro
+     - /dev/disk/:/dev/disk:ro
+   command:
+     - '-housekeeping_interval=10s'
+     - '-docker_only=true'
+   networks:
+     - monitoring
+
+

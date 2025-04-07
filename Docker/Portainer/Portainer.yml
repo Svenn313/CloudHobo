@@ -1,0 +1,16 @@
+##PORTAINER##
+services:
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer_CH
+    restart: unless-stopped
+    ports:
+      - 6040:9443
+      - 6041:9000
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+      - './Portainer/Volumes/data:/data'
+    networks:
+      - apps
+
+
