@@ -15,6 +15,6 @@ services:
       FTLCONF_webserver_api_password: ${PIHOLE_API_PASSWORD}
       WEBPASSWORD: ${PIHOLE_WEB_PASSWORD}
     volumes:
-      - './Pi-hole/Volumes:/etc/pihole'
+      - './Volumes:/etc/pihole'
     networks:
       - monitoring

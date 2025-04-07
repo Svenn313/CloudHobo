@@ -17,7 +17,7 @@ services:
       - CMD_DB_USER=${HD_DATABASE_USER}
       - CMD_DB_PASS=${HD_DATABASE_PASS}
     volumes:
-      - './Hedgedoc/Volumes:/hedgedoc/public/uploads'
+      - './Volumes:/hedgedoc/public/uploads'
     ports:
       - "6020:3000"
     depends_on:

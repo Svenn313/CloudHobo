@@ -9,7 +9,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASS}
       - POSTGRES_DB=hedgedoc
     volumes:
-      - './Postgres/Volumes:/var/lib/postgresql/data'
+      - './Volumes:/var/lib/postgresql/data'
     ports:
       - 5432:5432
     networks:

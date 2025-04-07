@@ -9,8 +9,6 @@ services:
       - 6041:9000
     volumes:
       - '/var/run/docker.sock:/var/run/docker.sock'
-      - './Portainer/Volumes/data:/data'
+      - './Volumes/data:/data'
     networks:
       - apps
-
-
