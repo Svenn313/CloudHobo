@@ -10,10 +10,17 @@ include:
   # - Prometheus/Prometheus.yml
     - Vaultwarden/Vaultwarden.yml
   # - Wireguard/Wireguard.yml
+    - Sonarr/Sonarr.yml
+    - Radarr/Radarr.yml
+    - Jellyfin/Jellyfin.yml
+    - Prowlarr/Prowlarr.yml
+    - Transmission/Transmission.yml
 
 ##MISC##
 networks:
   monitoring:
     driver: bridge
   apps:
+    driver: bridge
+  arrStack:
     driver: bridge

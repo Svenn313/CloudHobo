@@ -1,0 +1,15 @@
+services:
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr_CH
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Paris/Europe
+    volumes:
+      - ./Volumes:/config
+    ports:
+      - 8020:7878
+    networks:
+      - arrStack
