@@ -1,0 +1,21 @@
+services:
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin_CH
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Paris/Europe
+    # - JELLYFIN_PublishedServerUrl=http://192.168.0.5 #optional
+    volumes:
+      - ./Config/:/config
+      - /path/to/tvseries:/data/tvshows
+      - /path/to/movies:/data/movies
+    ports:
+      - 8030:8096
+      - 8031:8920
+      - 8032:7359/udp
+      - 8033:1900/udp
+    networks:
+      - arrStack

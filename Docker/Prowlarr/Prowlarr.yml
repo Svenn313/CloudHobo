@@ -1,0 +1,15 @@
+services:
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr_CH
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Paris/Europe
+    volumes:
+      - /Config/:/config
+    ports:
+      - 8040:9696
+    networks:
+      - arrStack
