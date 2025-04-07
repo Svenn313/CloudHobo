@@ -1,16 +1,16 @@
 services:
   include:
-  - Cadvisor/Cadvisor.yml
-  - Grafana/grafana.yml
+# - Cadvisor/Cadvisor.yml
+# - Grafana/grafana.yml
   - Hedgedoc/Hedgedoc.yml 
-  - Heimdall/Heimdall.yml
+# - Heimdall/Heimdall.yml
   - Mealie/Mealie.yml
-  - Pihole/Pihole.yml
-  - Portainer/Portainer.yml
-  - Postgres/Postres.yml
-  - Prometheus/Prometheus.yml
+# - Pihole/Pihole.yml
+# - Portainer/Portainer.yml
+  - Postgres/Postgres.yml
+# - Prometheus/Prometheus.yml
   - Vaultwarden/Vaultwarden.yml
-  - Wireguard/Wireguard.yml
+# - Wireguard/Wireguard.yml
 
 ##MISC##
 networks:
