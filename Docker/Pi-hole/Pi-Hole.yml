@@ -1,0 +1,20 @@
+##PI-HOLE##
+services:
+  pihole:
+    image: pihole/pihole:latest
+    container_name: pihole_CH
+    restart: unless-stopped
+    ports:
+      - 7040:443/tcp
+      - 7041:80/tcp
+      - 7042:53/tcp
+      - 7043:53/udp
+    # - 7044:67/udp # DHCP
+    environment:
+      TZ: 'Europe/Paris'
+      FTLCONF_webserver_api_password: ${PIHOLE_API_PASSWORD}
+      WEBPASSWORD: ${PIHOLE_WEB_PASSWORD}
+    volumes:
+      - './Pi-hole/Volumes:/etc/pihole'
+    networks:
+      - monitoring

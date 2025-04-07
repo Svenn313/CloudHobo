@@ -1,0 +1,23 @@
+##GRAFANA##
+services:
+  grafana:
+    image : grafana/grafana-enterprise:latest
+    container_name: grafana_CH
+    environment:
+      - GF_SERVER_PROTOCOL=https
+      - GF_SERVER_CERT_FILE=/app/ssl/cert.pem
+      - GF_SERVER_CERT_KEY=/app/ssl/key.pem
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAF_ADMIN_PASSWORD}
+    restart: unless-stopped
+    user: '0'
+    ports:
+      - 7030:3000
+    volumes:
+      - './Grafana/Volumes:/var/lib/grafana'
+      - '${SSL_CERT_PATH}:/app/ssl/cert.pem'
+      - '${SSL_KEY_PATH}:/app/ssl/key.pem'
+    networks:
+      - monitoring
+
+

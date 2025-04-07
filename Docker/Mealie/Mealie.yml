@@ -1,0 +1,28 @@
+##MEALIE##
+services:
+  mealie:
+    image: ghcr.io/mealie-recipes/mealie:latest
+    container_name: mealie_CH
+    restart: unless-stopped
+    ports:
+      - 6030:9000
+    deploy:
+      resources:
+        limits:
+          memory: 1000M
+    volumes:
+      - './Mealie/Volumes:/app/data/'
+      - '${SSL_CERT_PATH}:/app/ssl/cert.pem'
+      - '${SSL_KEY_PATH}:/app/ssl/key.pem'
+    environment:
+      ALLOW_SIGNUP: "false"
+      PUID: 1000
+      PGID: 1000
+      TLS_CERTIFICATE_PATH: /app/ssl/cert.pem
+      TLS_PRIVATE_KEY_PATH: /app/ssl/key.pem
+      TZ: Europe/Paris
+      BASE_URL: https://mealie.{DOMAIN_NAME}
+    networks:
+      - apps
+
+

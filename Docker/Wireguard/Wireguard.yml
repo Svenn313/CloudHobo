@@ -1,0 +1,30 @@
+##WIREGUARD##
+services:
+ wg-easy:
+   image: ghcr.io/wg-easy/wg-easy:latest
+   container_name: wgeasy_CH
+   restart: unless-stopped
+   environment:
+     - LANG=en
+     - WG_HOST=${DOMAIN_NAME}
+     - WG_PORT=51820
+     - WG_DEFAULT_ADDRESS=10.8.0.x
+     - WG_DEFAULT_DNS=8.8.8.8
+     - PASSWORD_HASH=${WG_PASS_HASH}
+   volumes:
+     - ./Wireguard/Volumes:/etc/wireguard
+     - /etc/letsencrypt/:/etc/letsencrypt/
+   ports:
+     - 7051:51820/udp
+     - 7050:51821/tcp
+   cap_add:
+     - NET_ADMIN
+     - SYS_MODULE
+   sysctls:
+     - net.ipv4.ip_forward=1
+     - net.ipv4.conf.all.src_valid_mark=1
+   healthcheck:
+     test: /usr/bin/timeout 5s /bin/sh -c "/usr/bin/wg show | /bin/grep -q interface || exit 1"
+     interval: 1m
+     timeout: 5s
+     retries: 3

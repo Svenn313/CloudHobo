@@ -1,0 +1,20 @@
+##VAULTWARDEN##
+services:
+  vaultwarden:
+    image: vaultwarden/server:latest
+    container_name: vaultwarden_CH
+    restart: unless-stopped
+    environment:
+      - DOMAIN=https://vaultwarden.${DOMAIN_NAME}
+      - ROCKET_TLS={certs="/ssl/certs.pem",key="/ssl/privkey.pem"}
+      - ADMIN_TOKEN=${VAULTWARDEN_ADMIN_TOKEN}
+    volumes:
+      - './Vaultwarden/Volumes:/data'
+      - '${SSL_FULLCHAIN_PATH}:/ssl/certs.pem:ro'
+      - '${SSL_KEY_PATH}:/ssl/privkey.pem:ro'
+    ports:
+      - 6010:80
+    networks:
+      - apps
+
+
