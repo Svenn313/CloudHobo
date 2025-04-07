@@ -1,8 +1,8 @@
 services:
 ##VAULTWARDEN##
   vaultwarden:
-    image: vaultwarden/server:1.33.2
-    container_name: CHvaultwarden
+    image: vaultwarden/server:latest
+    container_name: vaultwarden_CH
     restart: unless-stopped
     environment:
       - DOMAIN=https://vaultwarden.${DOMAIN_NAME}
@@ -19,8 +19,8 @@ services:
 
 ##HEDGEDOC##
   hedgedoc:
-    image: quay.io/hedgedoc/hedgedoc:1.10.2
-    container_name: CHhedge
+    image: quay.io/hedgedoc/hedgedoc:latest
+    container_name: hedge_CH
     restart: unless-stopped
     environment:
       - CMD_DOMAIN=hedge.${DOMAIN_NAME}
@@ -46,12 +46,12 @@ services:
 ##POSTGRES##
   postgres:
     image: postgres:13.4-alpine
-    container_name: CHpostgres
+    container_name: postgres_CH
     restart: unless-stopped
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASS}
-      - POSTGRES_DB=hedgedoc 
+      - POSTGRES_DB=hedgedoc
     volumes:
       - './Postgres/Volumes:/var/lib/postgresql/data'
     ports:
@@ -61,8 +61,8 @@ services:
 
 ##MEALIE##
   mealie:
-    image: ghcr.io/mealie-recipes/mealie:v2.8.0
-    container_name: CHmealie
+    image: ghcr.io/mealie-recipes/mealie:latest
+    container_name: mealie_CH
     restart: unless-stopped
     ports:
       - 6030:9000
@@ -81,114 +81,154 @@ services:
       TLS_CERTIFICATE_PATH: /app/ssl/cert.pem
       TLS_PRIVATE_KEY_PATH: /app/ssl/key.pem
       TZ: Europe/Paris
-      BASE_URL: https://mealie.svenlabs.fr
-
-##PI-HOLE##
-  pihole:
-    image: pihole/pihole:2025.03.0
-    container_name: CHpihole
-    restart: unless-stopped
-    ports:
-      - 6042:80/tcp
-      - 6043:443/tcp
-      - 6040:53/tcp
-      - 6041:53/udp
-    # - 6044:67/udp # DHCP
-    environment:
-      TZ: 'Europe/Paris'
-      FTLCONF_webserver_api_password: ${PIHOLE_API_PASSWORD}
-      WEBPASSWORD : ${PIHOLE_WEB_PASSWORD}
-    volumes:
-      - './Pi-hole/Volumes:/etc/pihole'
-    networks:
-       - apps
-
-##PORTAINER##
-  portainer:
-    image: portainer/portainer-ce:2.27.3
-    container_name: CHportainer
-    restart: unless-stopped
-    ports:
-      - 6050:9443
-      - 6051:9000
-    volumes:
-      - '/var/run/docker.sock:/var/run/docker.sock'
-      - './Portainer/Volumes/data:/data'
+      BASE_URL: https://mealie.{DOMAIN_NAME}
     networks:
       - apps
 
-##PROMETHEUS##
-  prometheus:
-    image: prom/prometheus:v2.53.4
-    container_name: CHprometheus
-    restart: unless-stopped
-    ports:
-      - 7010:9090
-    command:
-      - --config.file=/etc/prometheus/prometheus.yml
-      - --web.config.file=/etc/prometheus/web.yml
-    volumes:
-      - './Prometheus/Config/prometheus.yml:/etc/prometheus/prometheus.yml'
-      - './Prometheus/Config/web.yml:/etc/prometheus/web.yml'
-      - '${SSL_CERT_PATH}:/app/ssl/cert.pem'
-      - '${SSL_KEY_PATH}:/app/ssl/key.pem'
-    depends_on:
-      - cadvisor
-    networks:
-      - monitoring
-
-##CADVISOR##
-  cadvisor:
-    image: gcr.io/cadvisor/cadvisor:v0.52.1
-    container_name: CHcadvisor
-    restart: unless-stopped
-    ports:
-      - 7020:8080
-    volumes:
-      - /:/rootfs:ro
-      - /var/run:/var/run:rw
-      - /sys:/sys:ro
-      - /var/lib/docker/:/var/lib/docker:ro
-    networks:
-      - monitoring
-
-##GRAFANA##
-  grafana:
-    image : grafana/grafana-enterprise:11.6.0
-    container_name: CHgrafana
-    environment:
-      - GF_SERVER_PROTOCOL=https
-      - GF_SERVER_CERT_FILE=/app/ssl/cert.pem
-      - GF_SERVER_CERT_KEY=/app/ssl/key.pem
-      - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=${GRAF_ADMIN_PASSWORD}
-    restart: unless-stopped
-    user: '0'
-    ports:
-      - 7030:3000
-    volumes:
-      - './Grafana/Volumes:/var/lib/grafana'
-      - '${SSL_CERT_PATH}:/app/ssl/cert.pem'
-      - '${SSL_KEY_PATH}:/app/ssl/key.pem'
-    networks:
-      - monitoring
+##PORTAINER##
+#  portainer:
+#    image: portainer/portainer-ce:latest
+#    container_name: portainer_CH
+#    restart: unless-stopped
+#    ports:
+#      - 6040:9443
+#      - 6041:9000
+#    volumes:
+#      - '/var/run/docker.sock:/var/run/docker.sock'
+#      - './Portainer/Volumes/data:/data'
+#    networks:
+#      - apps
 
 ##HEIMDALL##
-  heimdall:
-    image: lscr.io/linuxserver/heimdall:latest
-    container_name: CHheimdall
-    restart: unless-stopped
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/Paris
-    volumes:
-      - './Heimdall/Volumes/Config:/config'
-      - '${SSL_CERT_PATH}:/config/keys/cert.pem'
-      - '${SSL_KEY_PATH}:/config/keys/key.pem'
-    ports:
-      - 7040:443
-      - 7041:80
+#  heimdall:
+#    image: lscr.io/linuxserver/heimdall:latest
+#    container_name: heimdall_CH
+#    restart: unless-stopped
+#    environment:
+#      - PUID=1000
+#      - PGID=1000
+#      - TZ=Europe/Paris
+#    volumes:
+#      - './Heimdall/Volumes/Config:/config'
+#      - '${SSL_CERT_PATH}:/config/keys/cert.pem'
+#      - '${SSL_KEY_PATH}:/config/keys/key.pem'
+#    ports:
+#      - 6050:443
+#      - 6051:80
+#    networks:
+#      - apps
+
+##PROMETHEUS##
+#  prometheus:
+#    image: prom/prometheus:latest
+#    container_name: prometheus_CH
+#    restart: unless-stopped
+#    ports:
+#      - 7010:9090
+#    command:
+#      - --config.file=/etc/prometheus/prometheus.yml
+#      - --web.config.file=/etc/prometheus/web.yml
+#    volumes:
+#      - './Prometheus/Config/prometheus.yml:/etc/prometheus/prometheus.yml'
+#      - './Prometheus/Config/web.yml:/etc/prometheus/web.yml'
+#      - '${SSL_CERT_PATH}:/app/ssl/cert.pem'
+#      - '${SSL_KEY_PATH}:/app/ssl/key.pem'
+#    depends_on:
+#      - cadvisor
+#    networks:
+#      - monitoring
+
+##CADVISOR##
+# cadvisor:
+#   image: gcr.io/cadvisor/cadvisor:latest
+#   container_name: cadvisor_CH
+#   restart: unless-stopped
+#   ports:
+#     - 7020:8080
+#   volumes:
+#     - /:/rootfs:ro
+#     - /var/run/docker.sock:/var/run/docker.sock:ro
+#     - /var/run:/var/run:rw
+#     - /sys:/sys:ro
+#     - /var/lib/docker:/var/lib/docker:ro
+#     - /sys/fs/cgroup:/cgroup:ro
+#     - /dev/disk/:/dev/disk:ro
+#   command:
+#     - '-housekeeping_interval=10s'
+#     - '-docker_only=true'
+#   networks:
+#     - monitoring
+
+##GRAFANA##
+#  grafana:
+#    image : grafana/grafana-enterprise:latest
+#    container_name: grafana_CH
+#    environment:
+#      - GF_SERVER_PROTOCOL=https
+#      - GF_SERVER_CERT_FILE=/app/ssl/cert.pem
+#      - GF_SERVER_CERT_KEY=/app/ssl/key.pem
+#      - GF_SECURITY_ADMIN_USER=admin
+#      - GF_SECURITY_ADMIN_PASSWORD=${GRAF_ADMIN_PASSWORD}
+#    restart: unless-stopped
+#    user: '0'
+#    ports:
+#      - 7030:3000
+#    volumes:
+#      - './Grafana/Volumes:/var/lib/grafana'
+#      - '${SSL_CERT_PATH}:/app/ssl/cert.pem'
+#      - '${SSL_KEY_PATH}:/app/ssl/key.pem'
+#    networks:
+#      - monitoring
+
+##PI-HOLE##
+#  pihole:
+#    image: pihole/pihole:latest
+#    container_name: pihole_CH
+#    restart: unless-stopped
+#    ports:
+#      - 7040:443/tcp
+#      - 7041:80/tcp
+#      - 7042:53/tcp
+#      - 7043:53/udp
+#    # - 7044:67/udp # DHCP
+#    environment:
+#      TZ: 'Europe/Paris'
+#      FTLCONF_webserver_api_password: ${PIHOLE_API_PASSWORD}
+#      WEBPASSWORD: ${PIHOLE_WEB_PASSWORD}
+#    volumes:
+#      - './Pi-hole/Volumes:/etc/pihole'
+#    networks:
+#      - monitoring
+
+##WIREGUARD##
+# wg-easy:
+#   image: ghcr.io/wg-easy/wg-easy:latest
+#   container_name: wgeasy_CH
+#   restart: unless-stopped
+#   environment:
+#     - LANG=en
+#     - WG_HOST=${DOMAIN_NAME}
+#     - WG_PORT=51820
+#     - WG_DEFAULT_ADDRESS=10.8.0.x
+#     - WG_DEFAULT_DNS=8.8.8.8
+#     - PASSWORD_HASH=${WG_PASS_HASH}
+#   volumes:
+#     - ./Wireguard/Volumes:/etc/wireguard
+#     - /etc/letsencrypt/:/etc/letsencrypt/
+#   ports:
+#     - 7051:51820/udp
+#     - 7050:51821/tcp
+#   cap_add:
+#     - NET_ADMIN
+#     - SYS_MODULE
+#   sysctls:
+#     - net.ipv4.ip_forward=1
+#     - net.ipv4.conf.all.src_valid_mark=1
+#   healthcheck:
+#     test: /usr/bin/timeout 5s /bin/sh -c "/usr/bin/wg show | /bin/grep -q interface || exit 1"
+#     interval: 1m
+#     timeout: 5s
+#     retries: 3
 
 ##MISC##
 networks:
