@@ -11,7 +11,7 @@ services:
         limits:
           memory: 1000M
     volumes:
-      - './Mealie/Volumes:/app/data/'
+      - './Volumes:/app/data/'
       - '${SSL_CERT_PATH}:/app/ssl/cert.pem'
       - '${SSL_KEY_PATH}:/app/ssl/key.pem'
     environment:

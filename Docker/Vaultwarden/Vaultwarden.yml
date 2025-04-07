@@ -9,7 +9,7 @@ services:
       - ROCKET_TLS={certs="/ssl/certs.pem",key="/ssl/privkey.pem"}
       - ADMIN_TOKEN=${VAULTWARDEN_ADMIN_TOKEN}
     volumes:
-      - './Vaultwarden/Volumes:/data'
+      - './Volumes:/data'
       - '${SSL_FULLCHAIN_PATH}:/ssl/certs.pem:ro'
       - '${SSL_KEY_PATH}:/ssl/privkey.pem:ro'
     ports:

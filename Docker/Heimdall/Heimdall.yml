@@ -9,7 +9,7 @@ services:
       - PGID=1000
       - TZ=Europe/Paris
     volumes:
-      - './Heimdall/Volumes/Config:/config'
+      - './Volumes/Config:/config'
       - '${SSL_CERT_PATH}:/config/keys/cert.pem'
       - '${SSL_KEY_PATH}:/config/keys/key.pem'
     ports:

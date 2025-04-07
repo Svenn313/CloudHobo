@@ -12,8 +12,8 @@ services:
      - WG_DEFAULT_DNS=8.8.8.8
      - PASSWORD_HASH=${WG_PASS_HASH}
    volumes:
-     - ./Wireguard/Volumes:/etc/wireguard
-     - /etc/letsencrypt/:/etc/letsencrypt/
+     - './Volumes:/etc/wireguard'
+     - '/etc/letsencrypt/:/etc/letsencrypt/'
    ports:
      - 7051:51820/udp
      - 7050:51821/tcp

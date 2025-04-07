@@ -14,7 +14,7 @@ services:
     ports:
       - 7030:3000
     volumes:
-      - './Grafana/Volumes:/var/lib/grafana'
+      - './Volumes:/var/lib/grafana'
       - '${SSL_CERT_PATH}:/app/ssl/cert.pem'
       - '${SSL_KEY_PATH}:/app/ssl/key.pem'
     networks:
