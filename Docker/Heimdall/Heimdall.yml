@@ -13,8 +13,8 @@ services:
       - '${SSL_CERT_PATH}:/config/keys/cert.pem'
       - '${SSL_KEY_PATH}:/config/keys/key.pem'
     ports:
-      - 6050:443
-      - 6051:80
+      - 6040:443
+      - 6041:80
     networks:
       - apps
 

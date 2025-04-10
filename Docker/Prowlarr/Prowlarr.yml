@@ -9,7 +9,6 @@ services:
       - TZ=Paris/Europe
     volumes:
       - /Config/:/config
-    ports:
-      - 8040:9696
-    networks:
-      - arrStack
+      - ${ARR_DL_DIR}:/downloads
+      - ${ARR_MEDIA_DIR}:/media
+    network_mode: "service:wiremission"

@@ -1,20 +1,21 @@
 include:
-  # - Cadvisor/Cadvisor.yml
-  # - Grafana/Grafana.yml
+  #  - Cadvisor/Cadvisor.yml
+  #  - Grafana/Grafana.yml
     - Hedgedoc/Hedgedoc.yml
-  # - Heimdall/Heimdall.yml
+    - Heimdall/Heimdall.yml
     - Mealie/Mealie.yml
-  # - Pi-hole/Pi-hole.yml
-  # - Portainer/Portainer.yml
+    - Pi-hole/Pi-hole.yml
     - Postgres/Postgres.yml
-  # - Prometheus/Prometheus.yml
+  #  - Prometheus/Prometheus.yml
     - Vaultwarden/Vaultwarden.yml
+    - Wiremission/Wiremission.yml
   # - Wireguard/Wireguard.yml
     - Sonarr/Sonarr.yml
     - Radarr/Radarr.yml
     - Jellyfin/Jellyfin.yml
     - Prowlarr/Prowlarr.yml
     - Transmission/Transmission.yml
+    - Bazarr/Bazarr.yml
 
 ##MISC##
 networks:
