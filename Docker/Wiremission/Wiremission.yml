@@ -1,0 +1,25 @@
+#Wiremission##
+services:
+  wiremission:
+    image: lscr.io/linuxserver/wireguard:latest
+    container_name: wiremission_CH
+    ports:
+      - "127.0.0.1:8060:6767/tcp" # Bazarr
+      - "127.0.0.1:8020:7878/tcp" # Radarr
+      - "127.0.0.1:8010:8989/tcp" # Sonarr
+      - "127.0.0.1:8050:9091/tcp" # Transmission
+      - "127.0.0.1:8040:9696/tcp" # Prowlarr
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE #optional
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Paris
+    volumes:
+      - ${WM_VPN_CONF}:/config/wg_confs/wg0.conf
+      - ./Config/:/config
+      - /lib/modules:/lib/modules #optional
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1

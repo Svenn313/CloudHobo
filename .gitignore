@@ -23,6 +23,9 @@ docs/
 *Volumes/
 *secrets.sh
 *.env*
+*Config/
+*proton.conf
+*wg0
 
 ## TERRAFORM ##
 **/.terraform/*
