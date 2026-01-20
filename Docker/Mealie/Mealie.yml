@@ -5,7 +5,7 @@ services:
     container_name: mealie_CH
     restart: unless-stopped
     ports:
-      - 6030:9000
+      - 127.0.0.1:6030:9000
     deploy:
       resources:
         limits:
@@ -21,8 +21,9 @@ services:
       TLS_CERTIFICATE_PATH: /app/ssl/cert.pem
       TLS_PRIVATE_KEY_PATH: /app/ssl/key.pem
       TZ: Europe/Paris
-      BASE_URL: https://mealie.{DOMAIN_NAME}
+      BASE_URL: https://mealie.${DOMAIN_NAME}
     networks:
       - apps
-
-
+    dns:
+      - '${HOST_URL}'
+      - '1.1.1.1'

@@ -1,20 +1,25 @@
-##PI-HOLE##
+## PI-HOLE ##
 services:
   pihole:
     image: pihole/pihole:latest
     container_name: pihole_CH
     restart: unless-stopped
-    ports:
-      - 7040:443/tcp
-      - 7041:80/tcp
-      - 7042:53/tcp
-      - 7043:53/udp
-    # - 7044:67/udp # DHCP
+    shm_size: '256m'
+    network_mode: host
+    cap_add:
+      - NET_ADMIN
+      - SYS_TIME
+      - SYS_NICE
+    dns:
+      - 1.1.1.1
     environment:
       TZ: 'Europe/Paris'
-      FTLCONF_webserver_api_password: ${PIHOLE_API_PASSWORD}
       WEBPASSWORD: ${PIHOLE_WEB_PASSWORD}
+      FTLCONF_webserver_api_password: ${PIHOLE_API_PASSWORD}
+      FTLCONF_dns_listeningMode: 'single'
+      IPV6: 'false'
+      ServerIP: ${HOST_URL}
+      VIRTUAL_HOST: pihole.${DOMAIN_NAME}
     volumes:
       - './Volumes:/etc/pihole'
-    networks:
-      - monitoring
+
