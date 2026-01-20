@@ -3,22 +3,28 @@ include:
   #  - Grafana/Grafana.yml
     - Hedgedoc/Hedgedoc.yml
     - Heimdall/Heimdall.yml
+    - Homeassistant/Homeassistant.yml
+    - Matrix/Matrix.yml
     - Mealie/Mealie.yml
-    - Pi-hole/Pi-hole.yml
+  #  - Pi-hole/Pi-hole.yml
     - Postgres/Postgres.yml
   #  - Prometheus/Prometheus.yml
-    - Vaultwarden/Vaultwarden.yml
+  #  - Vaultwarden/Vaultwarden.yml
     - Wiremission/Wiremission.yml
   # - Wireguard/Wireguard.yml
-    - Sonarr/Sonarr.yml
-    - Radarr/Radarr.yml
-    - Jellyfin/Jellyfin.yml
-    - Prowlarr/Prowlarr.yml
-    - Transmission/Transmission.yml
-    - Bazarr/Bazarr.yml
+  #  - Signal/Signal.yml  
+  #  - Sonarr/Sonarr.yml
+  #  - Radarr/Radarr.yml
+  #  - Jellyfin/Jellyfin.yml
+  #  - Prowlarr/Prowlarr.yml
+  #  - Transmission/Transmission.yml
+  #  - Bazarr/Bazarr.yml
+  #  - Wiremission/Wiremission.yml
 
 ##MISC##
 networks:
+  web:
+    driver: bridge
   monitoring:
     driver: bridge
   apps:

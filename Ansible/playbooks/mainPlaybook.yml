@@ -1,4 +1,0 @@
-# mainPlaybook.yml
-- import_playbook: sudoConfig.yml
-- import_playbook: installDocker.yml
-- import_playbook: cloudHobo.yml

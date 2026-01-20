@@ -1,0 +1,19 @@
+## Homeassistant ##
+services:
+  homeassistant:
+    image: homeassistant/home-assistant:stable
+    container_name: homeassistant_CH
+    restart: unless-stopped
+    network_mode: host
+    privileged: true
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    devices:
+      - /dev/serial/by-id/usb-dresden_elektronik_ConBee_III_DE03316391-if00-port0:/dev/ttyUSB0
+    dns:
+      - 1.1.1.1
+    environment:
+      - TZ=Europe/Paris
+    volumes:
+      - './Volumes:/config'
