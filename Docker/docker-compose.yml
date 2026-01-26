@@ -8,7 +8,7 @@ include:
     - Mealie/Mealie.yml
     - Pi-hole/Pi-hole.yml
     - Postgres/Postgres.yml
-    - Teamspeak/teamspeak.yml
+    - Teamspeak/Teamspeak.yml
   #  - Prometheus/Prometheus.yml
   #  - Vaultwarden/Vaultwarden.yml
     - Wiremission/Wiremission.yml
