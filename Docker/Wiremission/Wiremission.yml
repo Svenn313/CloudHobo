@@ -2,7 +2,7 @@
 services:
   wiremission:
     image: lscr.io/linuxserver/wireguard:latest
-    container_name: wiremission_CH
+    container_name: wiremission
     ports:
       - "127.0.0.1:8060:6767/tcp" # Bazarr
       - "127.0.0.1:8020:7878/tcp" # Radarr

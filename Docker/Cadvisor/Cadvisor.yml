@@ -2,7 +2,7 @@
 services:
   cadvisor:
    image: gcr.io/cadvisor/cadvisor:latest
-   container_name: cadvisor_CH
+   container_name: cadvisor
    restart: unless-stopped
    ports:
      - 7020:8080

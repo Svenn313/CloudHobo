@@ -2,7 +2,7 @@
 services:
   homeassistant:
     image: homeassistant/home-assistant:stable
-    container_name: homeassistant_CH
+    container_name: homeassistant
     restart: unless-stopped
     network_mode: host
     privileged: true
