@@ -4,7 +4,7 @@ services:
 # ------------------------
   synapse:
     image: matrixdotorg/synapse:latest
-    container_name: Matrix_CH
+    container_name: Matrix
     restart: unless-stopped
     ports:
      - 127.0.0.1:6050:8008 #HTTP

@@ -2,7 +2,7 @@
 services:
   mealie:
     image: ghcr.io/mealie-recipes/mealie:latest
-    container_name: mealie_CH
+    container_name: mealie
     restart: unless-stopped
     ports:
       - 127.0.0.1:6030:9000

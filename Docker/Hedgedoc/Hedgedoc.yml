@@ -2,7 +2,7 @@
 services:
   hedgedoc:
     image: quay.io/hedgedoc/hedgedoc:latest
-    container_name: hedge_CH
+    container_name: hedge
     restart: unless-stopped
     environment:
       - CMD_DOMAIN=hedge.${DOMAIN_NAME}
@@ -10,13 +10,14 @@ services:
       - CMD_PORT=3000
       - CMD_PROTOCOL_USESSL=true
       - CMD_DB_DIALECT=postgres
-      - CMD_DB_URL=postgres://${HD_DATABASE_NAME}:${HD_DATABASE_PASS}@${HOST_URL}:5432/hedgedoc
-      - CMD_DB_HOST=${HOST_URL}
+      - CMD_DB_URL=postgres://${HD_DATABASE_USER}:${HD_DATABASE_PASS}@postgres:${HD_DATABASE_PORT}/${HD_DATABASE_USER}
+      - CMD_DB_HOST=${HD_DATABASE_USER}
       - CMD_DB_DATABASE=${HD_DATABASE_NAME}
       - CMD_DB_PORT=${HD_DATABASE_PORT}
       - CMD_DB_USER=${HD_DATABASE_USER}
       - CMD_DB_PASS=${HD_DATABASE_PASS}
       - CMD_ALLOW_EMAIL_REGISTER=false
+      - CMD_SESSION_SECRET=${HD_SESSION_SECRET}
     volumes:
       - './Volumes:/hedgedoc/public/uploads'
     ports:

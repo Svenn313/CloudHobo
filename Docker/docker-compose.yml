@@ -6,8 +6,9 @@ include:
     - Homeassistant/Homeassistant.yml
     - Matrix/Matrix.yml
     - Mealie/Mealie.yml
-  #  - Pi-hole/Pi-hole.yml
+    - Pi-hole/Pi-hole.yml
     - Postgres/Postgres.yml
+    - Teamspeak/teamspeak.yml
   #  - Prometheus/Prometheus.yml
   #  - Vaultwarden/Vaultwarden.yml
     - Wiremission/Wiremission.yml
