@@ -1,0 +1,9 @@
+services:
+  mautrix-signal:
+    image: dock.mau.dev/mautrix/signal:latest
+    container_name: mautrix-signal
+    restart: unless-stopped
+    volumes:
+      - './Volumes:/data'
+    networks:
+      - apps

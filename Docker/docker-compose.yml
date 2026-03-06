@@ -1,28 +1,37 @@
 include:
-  #  - Cadvisor/Cadvisor.yml
-  #  - Grafana/Grafana.yml
-    - Hedgedoc/Hedgedoc.yml
-    - Heimdall/Heimdall.yml
-    - Homeassistant/Homeassistant.yml
-    - Matrix/Matrix.yml
-    - Mealie/Mealie.yml
-    - Pi-hole/Pi-hole.yml
-    - Postgres/Postgres.yml
-    - Teamspeak/Teamspeak.yml
-  #  - Prometheus/Prometheus.yml
-  #  - Vaultwarden/Vaultwarden.yml
-    - Wiremission/Wiremission.yml
-  # - Wireguard/Wireguard.yml
-  #  - Signal/Signal.yml  
-  #  - Sonarr/Sonarr.yml
-  #  - Radarr/Radarr.yml
-  #  - Jellyfin/Jellyfin.yml
-  #  - Prowlarr/Prowlarr.yml
-  #  - Transmission/Transmission.yml
-  #  - Bazarr/Bazarr.yml
-  #  - Wiremission/Wiremission.yml
+  # ┌─────────────────────────────────────┐
+  # │           SERVICES ACTIFS           │
+  # └─────────────────────────────────────┘
+  - Hedgedoc/Hedgedoc.yml
+  - Heimdall/Heimdall.yml
+  - Homeassistant/Homeassistant.yml
+  - Matrix/Matrix.yml
+  - Matrix/Bridges/mautrix-telegram/Mautrix-telegram.yml
+  - Matrix/Bridges/mautrix-whatsapp/Mautrix-whatsapp.yml
+  - Matrix/Bridges/mautrix-signal/Mautrix-signal.yml
+  - Mealie/Mealie.yml
+  - Pi-hole/Pi-hole.yml
+  - Postgres/Postgres.yml
+  - Joplin/Joplin.yml
+  - Wiremission/Wiremission.yml
 
-##MISC##
+  # ┌─────────────────────────────────────┐
+  # │          SERVICES INACTIFS          │
+  # └─────────────────────────────────────┘
+  # - Cadvisor/Cadvisor.yml
+  # - Grafana/Grafana.yml
+  # - Prometheus/Prometheus.yml
+  # - Teamspeak/Teamspeak.yml
+  # - Vaultwarden/Vaultwarden.yml
+  # - Wireguard/Wireguard.yml
+  # - Signal/Signal.yml
+  # - Sonarr/Sonarr.yml
+  # - Radarr/Radarr.yml
+  # - Jellyfin/Jellyfin.yml
+  # - Prowlarr/Prowlarr.yml
+  # - Transmission/Transmission.yml
+  # - Bazarr/Bazarr.yml
+
 networks:
   web:
     driver: bridge
