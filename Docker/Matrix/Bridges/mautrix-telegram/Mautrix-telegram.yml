@@ -1,0 +1,12 @@
+services:
+  mautrix-telegram:
+    image: dock.mau.dev/mautrix/telegram:latest
+    container_name: mautrix-telegram
+    restart: unless-stopped
+    volumes:
+      - './Volumes:/data'
+    networks:
+      - apps
+
+networks:
+  apps:
