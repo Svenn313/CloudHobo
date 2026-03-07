@@ -1,6 +1,6 @@
 include:
   # ┌─────────────────────────────────────┐
-  # │           SERVICES ACTIFS           │
+  # │           ACTIVE SERVICES           │
   # └─────────────────────────────────────┘
   - Hedgedoc/Hedgedoc.yml
   - Heimdall/Heimdall.yml
@@ -16,7 +16,7 @@ include:
   - Wiremission/Wiremission.yml
 
   # ┌─────────────────────────────────────┐
-  # │          SERVICES INACTIFS          │
+  # │          DISABLED SERVICES          │
   # └─────────────────────────────────────┘
   # - Cadvisor/Cadvisor.yml
   # - Grafana/Grafana.yml
