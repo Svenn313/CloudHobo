@@ -1,0 +1,35 @@
+## MEALIE ##
+services:
+  mealie:
+    image: ghcr.io/mealie-recipes/mealie:latest
+    container_name: mealie
+    restart: unless-stopped
+    ports:
+      - 127.0.0.1:6030:9000
+    deploy:
+      resources:
+        limits:
+          memory: 1000M
+    volumes:
+      - './volumes:/app/data/'
+      - '${SSL_CERT_PATH}:/app/ssl/cert.pem'
+      - '${SSL_KEY_PATH}:/app/ssl/key.pem'
+    environment:
+      DB_ENGINE: postgres
+      POSTGRES_USER: ${MEALIE_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${MEALIE_POSTGRES_PASSWORD}
+      POSTGRES_SERVER: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: ${MEALIE_DB_NAME}
+      ALLOW_SIGNUP: "false"
+      PUID: 1000
+      PGID: 1000
+      TLS_CERTIFICATE_PATH: /app/ssl/cert.pem
+      TLS_PRIVATE_KEY_PATH: /app/ssl/key.pem
+      TZ: Europe/Paris
+      BASE_URL: https://mealie.${DOMAIN_NAME}
+    networks:
+      - apps
+    dns:
+      - '${HOST_URL}'  # Pi-hole for local DNS resolution
+      - '1.1.1.1'      # Cloudflare fallback

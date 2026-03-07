@@ -1,0 +1,18 @@
+##POSTGRES##
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASS}
+      - POSTGRES_DB=${HD_DATABASE_NAME}
+    volumes:
+      - './volumes:/var/lib/postgresql/data'
+    ports:
+     - 5432:5432
+    networks:
+       - apps
+
+
