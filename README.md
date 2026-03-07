@@ -1,6 +1,7 @@
 # 🏠 Homelab
 
-Personal self-hosted infrastructure running on Docker. This repo contains all the configuration files to spin up my services.
+Personal self-hosted infrastructure running on Docker.
+This repo contains all the configuration files to spin up my services.
 
 ## Stack
 
@@ -15,13 +16,12 @@ Personal self-hosted infrastructure running on Docker. This repo contains all th
 | **Mealie** | Recipe manager & meal planner |
 | **Heimdall** | Dashboard for all services |
 | **Home Assistant** | Home automation |
-| **Pi-hole** | Network-wide ad blocker / DNS |
+| **Pihole** | Network-wide ad blocker / DNS |
 | **PostgreSQL** | Database backend |
 
 ## Usage
 
-```
-bash
+```bash
 # Start everything
 docker compose up -d
 
@@ -29,7 +29,7 @@ docker compose up -d
 docker compose down
 
 # View logs
-docker logs  --tail 50 -f
+docker logs -f <container>
 ```
 
 ## Requirements
@@ -37,3 +37,8 @@ docker logs  --tail 50 -f
 - Docker & Docker Compose
 - A domain with DNS properly configured
 - A reverse proxy
+
+## MISC
+
+There is some other container in the docker-compose that are currently inactive
+(mostly because I dont use/need them anymore)
