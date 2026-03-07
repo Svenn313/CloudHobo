@@ -2,36 +2,36 @@ include:
   # ┌─────────────────────────────────────┐
   # │           ACTIVE SERVICES           │
   # └─────────────────────────────────────┘
-  - Heimdall/Heimdall.yml
-  - Homeassistant/Homeassistant.yml
-  - Matrix/Matrix.yml
-  - Matrix/Bridges/mautrix-telegram/Mautrix-telegram.yml
-  - Matrix/Bridges/mautrix-whatsapp/Mautrix-whatsapp.yml
-  - Matrix/Bridges/mautrix-signal/Mautrix-signal.yml
-  - Mealie/Mealie.yml
-  - Pi-hole/Pi-hole.yml
-  - Postgres/Postgres.yml
-  - Joplin/Joplin.yml
+  - heimdall/heimdall.yml
+  - homeassistant/homeassistant.yml
+  - matrix/matrix.yml
+  - matrix/bridges/mautrix-telegram/mautrix-telegram.yml
+  - matrix/bridges/mautrix-whatsapp/mautrix-whatsapp.yml
+  - matrix/bridges/mautrix-signal/mautrix-signal.yml
+  - mealie/mealie.yml
+  - pi-hole/pi-hole.yml
+  - postgres/postgres.yml
+  - joplin/joplin.yml
   - postfix/postfix.yml
 
   # ┌─────────────────────────────────────┐
   # │          DISABLED SERVICES          │
   # └─────────────────────────────────────┘
-  # - Cadvisor/Cadvisor.yml
-  # - Grafana/Grafana.yml
-  # - Prometheus/Prometheus.yml
-  # - Teamspeak/Teamspeak.yml
-  # - Vaultwarden/Vaultwarden.yml
-  # - Wireguard/Wireguard.yml
-  # - Signal/Signal.yml
-  # - Sonarr/Sonarr.yml
-  # - Radarr/Radarr.yml
-  # - Jellyfin/Jellyfin.yml
-  # - Prowlarr/Prowlarr.yml
-  # - Transmission/Transmission.yml
-  # - Bazarr/Bazarr.yml
-  # - Hedgedoc/Hedgedoc.yml
-  # - Wiremission/Wiremission.yml
+  # - cadvisor/cadvisor.yml
+  # - grafana/grafana.yml
+  # - prometheus/prometheus.yml
+  # - teamspeak/teamspeak.yml
+  # - vaultwarden/vaultwarden.yml
+  # - wireguard/wireguard.yml
+  # - signal/Signal.yml
+  # - sonarr/sonarr.yml
+  # - radarr/radarr.yml
+  # - jellyfin/jellyfin.yml
+  # - prowlarr/prowlarr.yml
+  # - transmission/transmission.yml
+  # - bazarr/bazarr.yml
+  # - hedgedoc/hedgedoc.yml
+  # - wiremission/wiremission.yml
 
 networks:
   web:

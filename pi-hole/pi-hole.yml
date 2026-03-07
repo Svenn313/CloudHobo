@@ -1,0 +1,25 @@
+## PI-HOLE ##
+services:
+  pihole:
+    image: pihole/pihole:latest
+    container_name: pihole
+    restart: unless-stopped
+    network_mode: host  # Required to intercept DNS traffic
+    shm_size: '256m'
+    cap_add:
+      - NET_ADMIN   # Required for DNS and DHCP
+      - SYS_TIME
+      - SYS_NICE
+    environment:
+      WEBPASSWORD: ${PIHOLE_WEB_PASSWORD}
+      FTLCONF_webserver_api_password: ${PIHOLE_API_PASSWORD}
+      FTLCONF_webserver_port: "8081"
+      FTLCONF_webserver_https: "false"
+      IPV6: 'false'
+      ServerIP: ${HOST_URL}
+      VIRTUAL_HOST: pihole.${DOMAIN_NAME}
+      TZ: 'Europe/Paris'
+      FTLCONF_dns_listeningMode: 'ALL'
+    volumes:
+      - './volumes:/etc/pihole'
+

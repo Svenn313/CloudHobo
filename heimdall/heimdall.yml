@@ -1,0 +1,21 @@
+##HEIMDALL##
+services:
+  heimdall:
+    image: lscr.io/linuxserver/heimdall:latest
+    container_name: heimdall
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Paris
+    volumes:
+      - './volumes/Config:/config'
+      - '${SSL_CERT_PATH}:/config/keys/cert.pem'
+      - '${SSL_KEY_PATH}:/config/keys/key.pem'
+    ports:
+      - 127.0.0.1:6040:443
+      - 127.0.0.1:6041:80
+    networks:
+      - apps
+
+
