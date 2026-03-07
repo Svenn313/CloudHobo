@@ -1,0 +1,38 @@
+services:
+  protonmail-bridge:
+    image: ghcr.io/videocurio/proton-mail-bridge:latest
+    container_name: protonmail-bridge
+    restart: unless-stopped
+    ports:
+      - "1025:25"
+      - "1143:143"
+    volumes:
+      - ./volumes/protonmail-bridge:/root
+    stdin_open: true
+    tty: true
+    networks:
+      - apps
+
+  smtp-relay:
+    image: boky/postfix
+    container_name: postfix
+    restart: unless-stopped
+    depends_on:
+      - protonmail-bridge
+    ports:
+      - "25:25"
+    environment:
+      - HOSTNAME=${SMTP_HOSTNAME}
+      - RELAYHOST=[protonmail-bridge]:25
+      - RELAYHOST_USERNAME=${PROTON_EMAIL}
+      - RELAYHOST_PASSWORD=${PROTON_BRIDGE_PASSWORD}
+      - POSTFIX_mynetworks=${SMTP_NETWORKS}
+      - ALLOWED_SENDER_DOMAINS=svenlabs.fr
+      - POSTFIX_sender_canonical_maps=static:${PROTON_EMAIL}
+      - POSTFIX_sender_canonical_classes=envelope_sender,header_sender
+      - POSTFIX_smtpd_tls_security_level=none
+      - POSTFIX_smtp_tls_security_level=none
+    volumes:
+      - ./volumes/postfix-spool:/var/spool/postfix
+    networks:
+      - apps

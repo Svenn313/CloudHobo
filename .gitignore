@@ -21,6 +21,7 @@ docs/
 
 ## DOCKER ##
 *Volumes/
+*volumes/
 *secrets.sh
 *.env*
 *Config/

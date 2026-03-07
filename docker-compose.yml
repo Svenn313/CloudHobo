@@ -12,6 +12,7 @@ include:
   - Pi-hole/Pi-hole.yml
   - Postgres/Postgres.yml
   - Joplin/Joplin.yml
+  - postfix/postfix.yml
 
   # ┌─────────────────────────────────────┐
   # │          DISABLED SERVICES          │
