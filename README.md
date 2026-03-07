@@ -18,6 +18,7 @@ This repo contains all the configuration files to spin up my services.
 | **Home Assistant** | Home automation |
 | **Pihole** | Network-wide ad blocker / DNS |
 | **PostgreSQL** | Database backend |
+| **Postfix** | SMTP Server |
 
 ## Usage
 
