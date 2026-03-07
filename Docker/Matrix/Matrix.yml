@@ -4,7 +4,7 @@ services:
 # ------------------------
   synapse:
     image: matrixdotorg/synapse:latest
-    container_name: Matrix
+    container_name: matrix
     restart: unless-stopped
     ports:
      - 127.0.0.1:6050:8008 #HTTP
@@ -17,3 +17,16 @@ services:
      - ./Volumes:/data
     networks:
      - apps
+#------------------------
+# Synapse-admin
+#------------------------
+  synapse-admin:
+    image: ghcr.io/etkecc/synapse-admin:latest
+    container_name: synapse-admin
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8082:8080"
+    depends_on:
+      - synapse
+    networks:
+      - apps
