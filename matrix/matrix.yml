@@ -30,3 +30,18 @@ services:
       - synapse
     networks:
       - apps
+
+# ------------------------
+# Sticker picker
+# ------------------------
+  stickerpicker:
+    image: nginx:alpine
+    container_name: matrix-stickerpicker
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8083:80"
+    volumes:
+      - ./volumes/stickers:/usr/share/nginx/html:ro
+      - ./stickers-nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      - apps
