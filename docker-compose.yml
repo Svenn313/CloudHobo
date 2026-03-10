@@ -13,6 +13,8 @@ include:
   - postgres/postgres.yml
   - joplin/joplin.yml
   - postfix/postfix.yml
+  - diun/diun.yml
+  - fastf1/fastf1.yml
 
   # ┌─────────────────────────────────────┐
   # │          DISABLED SERVICES          │
