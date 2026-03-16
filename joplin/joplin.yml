@@ -4,7 +4,7 @@ services:
     container_name: joplin
     restart: unless-stopped
     ports:
-      - "22300:22300"
+      - 127.0.0.1:22300:22300
     environment:
       - APP_PORT=22300
       - APP_BASE_URL=https://joplin.${DOMAIN_NAME}
