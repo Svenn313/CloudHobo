@@ -15,25 +15,25 @@ include:
   - postfix/postfix.yml
   - diun/diun.yml
   - fastf1/fastf1.yml
-
+  - teamspeak/teamspeak.yml
+  - sonarr/sonarr.yml
+  - radarr/radarr.yml
+  - jellyfin/jellyfin.yml
+  - prowlarr/prowlarr.yml
+  - transmission/transmission.yml
+  - bazarr/bazarr.yml
+  - wiremission/wiremission.yml
+  
   # ┌─────────────────────────────────────┐
   # │          DISABLED SERVICES          │
   # └─────────────────────────────────────┘
   # - cadvisor/cadvisor.yml
   # - grafana/grafana.yml
   # - prometheus/prometheus.yml
-  # - teamspeak/teamspeak.yml
   # - vaultwarden/vaultwarden.yml
   # - wireguard/wireguard.yml
   # - signal/Signal.yml
-  # - sonarr/sonarr.yml
-  # - radarr/radarr.yml
-  # - jellyfin/jellyfin.yml
-  # - prowlarr/prowlarr.yml
-  # - transmission/transmission.yml
-  # - bazarr/bazarr.yml
   # - hedgedoc/hedgedoc.yml
-  # - wiremission/wiremission.yml
 
 networks:
   web:

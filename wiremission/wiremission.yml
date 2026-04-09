@@ -19,7 +19,7 @@ services:
       - TZ=Europe/Paris
     volumes:
       - ${WM_VPN_CONF}:/config/wg_confs/wg0.conf
-      - ./Config/:/config
+      - ./config/:/config
       - /lib/modules:/lib/modules #optional
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1

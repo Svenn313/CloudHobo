@@ -24,7 +24,7 @@ docs/
 *volumes/
 *secrets.sh
 *.env*
-*Config/
+*config/
 *proton.conf
 *wg0
 
@@ -62,3 +62,4 @@ override.tf.json
 # Ignore CLI configuration files
 .terraformrc
 terraform.rc
+

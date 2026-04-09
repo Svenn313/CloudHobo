@@ -9,7 +9,7 @@ services:
       - PGID=1000
       - TZ=Europe/Paris
     volumes:
-      - './volumes/Config:/config'
+      - './volumes/config:/config'
       - '${SSL_CERT_PATH}:/config/keys/cert.pem'
       - '${SSL_KEY_PATH}:/config/keys/key.pem'
     ports:
