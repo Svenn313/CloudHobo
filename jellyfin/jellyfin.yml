@@ -9,7 +9,7 @@ services:
       - TZ=Paris/Europe
       - JELLYFIN_PublishedServerUrl=http://${HOST_URL}
     volumes:
-      - ./Config/:/config
+      - ./config/:/config
       - ${ARR_MEDIA_DIR}:/media
     ports:
       - 8030:8096

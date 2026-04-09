@@ -1,14 +1,14 @@
 services:
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
-    container_name: prowlarr_CH
+    container_name: prowlarr
     restart: unless-stopped
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=Paris/Europe
     volumes:
-      - /Config/:/config
+      - /config/:/config
       - ${ARR_DL_DIR}:/downloads
       - ${ARR_MEDIA_DIR}:/media
     network_mode: "service:wiremission"

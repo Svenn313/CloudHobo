@@ -1,7 +1,7 @@
 services:
   transmission:
     image: lscr.io/linuxserver/transmission:latest
-    container_name: transmission_CH
+    container_name: transmission
     restart: unless-stopped
     environment:
       - PUID=1000
@@ -14,7 +14,7 @@ services:
       - PEERPORT= #optional
       - HOST_WHITELIST= #optional
     volumes:
-      - /Config/:/config
+      - /config/:/config
       - ${ARR_DL_DIR}:/downloads
       - ${ARR_MEDIA_DIR}:/media
     network_mode: "service:wiremission"
