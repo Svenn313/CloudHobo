@@ -1,8 +1,14 @@
 #Wiremission##
 services:
   wiremission:
-    image: lscr.io/linuxserver/wireguard:latest
+    image: lscr.io/linuxserver/wireguard:1.0.20210914
     container_name: wiremission
+    healthcheck:
+      test: ["CMD", "curl", "-s", "--max-time", "5", "https://ipinfo.io/ip"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
     ports:
       - "127.0.0.1:8060:6767/tcp" # Bazarr
       - "127.0.0.1:8020:7878/tcp" # Radarr

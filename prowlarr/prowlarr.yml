@@ -1,8 +1,11 @@
 services:
   prowlarr:
-    image: lscr.io/linuxserver/prowlarr:latest
+    image: lscr.io/linuxserver/prowlarr:1.28.2
     container_name: prowlarr
     restart: unless-stopped
+    depends_on:
+      wiremission:
+        condition: service_healthy
     environment:
       - PUID=1000
       - PGID=1000

@@ -1,8 +1,11 @@
 services:
   radarr:
-    image: lscr.io/linuxserver/radarr:latest
+    image: lscr.io/linuxserver/radarr:5.18.4
     container_name: radarr
     restart: unless-stopped
+    depends_on:
+      wiremission:
+        condition: service_healthy
     environment:
       - PUID=1000
       - PGID=1000

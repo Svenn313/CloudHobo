@@ -1,8 +1,11 @@
 services:
   bazarr:
-    image: lscr.io/linuxserver/bazarr:latest
+    image: lscr.io/linuxserver/bazarr:1.4.5
     container_name: bazarr
     restart: unless-stopped
+    depends_on:
+      wiremission:
+        condition: service_healthy
     environment:
       - PUID=1000
       - PGID=1000

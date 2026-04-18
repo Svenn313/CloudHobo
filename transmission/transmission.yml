@@ -1,8 +1,11 @@
 services:
   transmission:
-    image: lscr.io/linuxserver/transmission:latest
+    image: lscr.io/linuxserver/transmission:4.0.6
     container_name: transmission
     restart: unless-stopped
+    depends_on:
+      wiremission:
+        condition: service_healthy
     environment:
       - PUID=1000
       - PGID=1000
