@@ -3,7 +3,7 @@ services:
 # Synapse
 # ------------------------
   synapse:
-    image: matrixdotorg/synapse:latest
+    image: matrixdotorg/synapse:v1.150.0
     container_name: matrix
     restart: unless-stopped
     ports:
@@ -21,7 +21,7 @@ services:
 # Synapse-admin
 #------------------------
   synapse-admin:
-    image: ghcr.io/etkecc/synapse-admin:latest
+    image: ghcr.io/etkecc/synapse-admin:v0.10.4-etke40
     container_name: synapse-admin
     restart: unless-stopped
     ports:
@@ -35,7 +35,7 @@ services:
 # Sticker picker
 # ------------------------
   stickerpicker:
-    image: nginx:alpine
+    image: nginx:1.28-alpine
     container_name: matrix-stickerpicker
     restart: unless-stopped
     ports:

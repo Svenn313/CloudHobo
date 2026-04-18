@@ -1,7 +1,7 @@
 # Home Assistant - Home automation platform
 services:
   homeassistant:
-    image: homeassistant/home-assistant:stable
+    image: homeassistant/home-assistant:2026.4.0
     container_name: homeassistant
     restart: unless-stopped
     network_mode: host        # Required for device discovery (mDNS, UPnP)

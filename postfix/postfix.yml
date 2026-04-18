@@ -14,7 +14,7 @@ services:
       - apps
 
   smtp-relay:
-    image: boky/postfix
+    image: boky/postfix:v5.1.0
     container_name: postfix
     restart: unless-stopped
     depends_on:

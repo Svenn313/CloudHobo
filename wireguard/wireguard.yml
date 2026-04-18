@@ -1,7 +1,7 @@
 ##WIREGUARD##
 services:
  wg-easy:
-   image: ghcr.io/wg-easy/wg-easy:latest
+   image: ghcr.io/wg-easy/wg-easy:15
    container_name: wgeasy_CH
    restart: unless-stopped
    environment:
