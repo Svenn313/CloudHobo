@@ -11,7 +11,7 @@ services:
       - PGID=1000
       - TZ=Europe/Paris
     volumes:
-      - ./bazarr/config:/config
+      - ./volumes:/config
       - ${ARR_DL_DIR}:/downloads
       - ${ARR_MEDIA_DIR}:/media
     network_mode: "service:wiremission"
