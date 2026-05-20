@@ -29,3 +29,18 @@ services:
       - /lib/modules:/lib/modules #optional
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
+
+  portforwarder:
+    image: petrkubica/natpmp-runner
+    container_name: portforwarder
+    network_mode: "service:wiremission"
+    depends_on:
+      wiremission:
+        condition: service_healthy
+    volumes:
+      - ./scripts/portforward.sh:/portforward.sh
+    entrypoint: ["/bin/bash", "/portforward.sh"]
+    restart: unless-stopped
+    environment:
+      - TM_USER=${TM_USER}
+      - TM_PASS=${TM_PASS}
