@@ -27,6 +27,8 @@ docs/
 *config/
 *proton.conf
 *wg0
+*wg0.conf
+**/wg_confs/
 
 ## TERRAFORM ##
 **/.terraform/*
