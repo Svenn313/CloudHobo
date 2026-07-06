@@ -14,13 +14,14 @@ include:
   - joplin/joplin.yml
   - postfix/postfix.yml
   - diun/diun.yml
-  - teamspeak/teamspeak.yml
   - sonarr/sonarr.yml
   - radarr/radarr.yml
   - jellyfin/jellyfin.yml
   - prowlarr/prowlarr.yml
   - transmission/transmission.yml
   - bazarr/bazarr.yml
+  - dozzle/dozzle.yml
+  - beszel/beszel.yml
   - wiremission/wiremission.yml
   
   # ┌─────────────────────────────────────┐
@@ -33,6 +34,7 @@ include:
   # - wireguard/wireguard.yml
   # - signal/Signal.yml
   # - hedgedoc/hedgedoc.yml
+  # - teamspeak/teamspeak.yml
 
 networks:
   web:

@@ -1,5 +1,7 @@
 ## ANSIBLE ##
 ansible.cfg
+backup.sh
+dumps/
 inventory.yml
 .retry
 *.retry

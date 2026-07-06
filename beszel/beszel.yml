@@ -1,0 +1,25 @@
+services:
+  beszel:
+    image: henrygd/beszel:0.18.7
+    container_name: beszel
+    restart: unless-stopped
+    networks:
+      - monitoring
+    ports:
+      - "9091:8090"
+    volumes:
+      - ./volumes/beszel:/beszel_data
+
+  beszel-agent:
+    image: henrygd/beszel-agent:0.18.7
+    container_name: beszel-agent
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./volumes/beszel-agent:/var/lib/beszel-agent
+    environment:
+      - PORT=45876
+      - KEY=${BZ_SSH_KEY}
+      - HUB_URL=${BZ_HUB_URL}
+      - TOKEN=${BZ_TOKEN}
