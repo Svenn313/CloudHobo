@@ -14,7 +14,6 @@ include:
   - joplin/joplin.yml
   - postfix/postfix.yml
   - paperless/paperless.yml
-  - diun/diun.yml
   - sonarr/sonarr.yml
   - radarr/radarr.yml
   - jellyfin/jellyfin.yml
@@ -29,6 +28,7 @@ include:
   # │          DISABLED SERVICES          │
   # └─────────────────────────────────────┘
   # - cadvisor/cadvisor.yml
+  # - diun/diun.yml
   # - grafana/grafana.yml
   # - prometheus/prometheus.yml
   # - vaultwarden/vaultwarden.yml
