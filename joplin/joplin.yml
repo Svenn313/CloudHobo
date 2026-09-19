@@ -1,6 +1,6 @@
 services:
   joplin:
-    image: joplin/server:latest
+    image: joplin/server:3.5.2
     container_name: joplin
     restart: unless-stopped
     ports:
