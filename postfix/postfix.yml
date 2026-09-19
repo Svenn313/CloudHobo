@@ -1,6 +1,6 @@
 services:
   protonmail-bridge:
-    image: ghcr.io/videocurio/proton-mail-bridge:latest
+    image: ghcr.io/videocurio/proton-mail-bridge:v3.24.2
     container_name: protonmail-bridge
     restart: unless-stopped
     ports:
@@ -8,6 +8,7 @@ services:
       - "1143:143"
     volumes:
       - ./volumes/protonmail-bridge:/root
+      - ./volumes/bridge-cache:/root/.cache/protonmail/bridge-v3
     stdin_open: true
     tty: true
     networks:
