@@ -1,6 +1,6 @@
 services:
   mautrix-whatsapp:
-    image: dock.mau.dev/mautrix/whatsapp:latest
+    image: dock.mau.dev/mautrix/whatsapp:v26.08
     container_name: mautrix-whatsapp
     restart: unless-stopped
     volumes:

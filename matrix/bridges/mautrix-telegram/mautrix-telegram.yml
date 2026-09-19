@@ -1,6 +1,6 @@
 services:
   mautrix-telegram:
-    image: dock.mau.dev/mautrix/telegram:latest
+    image: dock.mau.dev/mautrix/telegram:v26.08
     container_name: mautrix-telegram
     restart: unless-stopped
     volumes:

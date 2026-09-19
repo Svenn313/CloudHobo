@@ -1,6 +1,6 @@
 services:
   mautrix-signal:
-    image: dock.mau.dev/mautrix/signal:latest
+    image: dock.mau.dev/mautrix/signal:v26.08
     container_name: mautrix-signal
     restart: unless-stopped
     volumes:
