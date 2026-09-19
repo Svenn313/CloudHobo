@@ -1,0 +1,47 @@
+services:
+  paperless-broker:
+    container_name: paperless-redis
+    image: docker.io/library/redis:7
+    restart: unless-stopped
+    volumes:
+      - ./volumes/redisdata:/data
+    networks:
+      - apps
+
+  paperless-bridge-relay:
+    container_name: paperless-mailbridge
+    image: alpine/socat
+    network_mode: "service:paperless-webserver"
+    command: TCP-LISTEN:1143,fork,reuseaddr TCP:protonmail-bridge:143
+    depends_on:
+      - paperless-webserver
+
+  paperless-webserver:
+    container_name: paperless-webserver
+    image: ghcr.io/paperless-ngx/paperless-ngx:3.1
+    restart: unless-stopped
+    depends_on:
+      - paperless-broker
+    ports:
+      - "${PPL_PORT}:8000"
+    volumes:
+      - ./volumes/data:/usr/src/paperless/data
+      - ./volumes/media:/usr/src/paperless/media
+      - ./volumes/export:/usr/src/paperless/export
+      - ./volumes/consume:/usr/src/paperless/consume
+      - ./volumes/bridge-cert.pem:/usr/src/paperless/bridge-cert.pem:ro
+    environment:
+      PAPERLESS_REDIS: redis://paperless-broker:6379
+      PAPERLESS_DBHOST: ${PPL_DBHOST}
+      PAPERLESS_DBPORT: ${PPL_DBPORT}
+      PAPERLESS_DBNAME: ${PPL_DBNAME}
+      PAPERLESS_DBUSER: ${PPL_DBUSER}
+      PAPERLESS_DBPASS: ${PPL_DBPASS}
+      PAPERLESS_URL: ${PPL_URL}
+      PAPERLESS_TIME_ZONE: ${PPL_TIME_ZONE}
+      PAPERLESS_OCR_LANGUAGE: ${PPL_OCR_LANGUAGE}
+      PAPERLESS_SECRET_KEY: ${PPL_SECRET_KEY}
+      PAPERLESS_CSRF_TRUSTED_ORIGINS: ${PPL_CSRF_TRUSTED_ORIGINS}
+      PAPERLESS_EMAIL_CERTIFICATE_LOCATION: /usr/src/paperless/bridge-cert.pem
+    networks:
+      - apps
