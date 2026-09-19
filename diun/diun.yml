@@ -1,4 +1,4 @@
-services:  
+services:
   diun:
     image: crazymax/diun:4.31.0
     container_name: diun
