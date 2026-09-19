@@ -3,7 +3,7 @@ services:
 # Synapse
 # ------------------------
   synapse:
-    image: matrixdotorg/synapse:v1.150.0
+    image: matrixdotorg/synapse:v1.157.2
     container_name: matrix
     restart: unless-stopped
     ports:
@@ -25,7 +25,7 @@ services:
     container_name: synapse-admin
     restart: unless-stopped
     ports:
-      - "127.0.0.1:8082:8080"
+      - "127.0.0.1:8082:80"
     depends_on:
       - synapse
     networks:
@@ -43,5 +43,22 @@ services:
     volumes:
       - ./volumes/stickers:/usr/share/nginx/html:ro
       - ./stickers-nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      - apps
+
+# ------------------------
+# Matrix Authentication Service
+# ------------------------
+  mas:
+    image: ghcr.io/element-hq/matrix-authentication-service:1.24.0
+    container_name: mas
+    restart: unless-stopped
+    command: ["server", "--config", "/config.yaml"]
+    ports:
+      - "127.0.0.1:8084:8080"
+    volumes:
+      - ./volumes/mas/config.yaml:/config.yaml:ro
+    depends_on:
+      - synapse
     networks:
       - apps
