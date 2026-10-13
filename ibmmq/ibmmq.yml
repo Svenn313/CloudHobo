@@ -1,0 +1,57 @@
+## IBM MQ ##
+x-ibmmq: &ibmmq
+  image: icr.io/ibm-messaging/mq:9.4.2.0-r1
+  restart: unless-stopped
+  networks:
+    - apps
+  environment: &ibmmq-env
+    LICENSE: accept
+    MQ_ADMIN_PASSWORD: ${MQ_ADMIN_PASSWORD}
+    MQ_APP_PASSWORD: ${MQ_APP_PASSWORD}
+
+services:
+  mq-qm1:
+    <<: *ibmmq
+    container_name: mq-qm1
+    hostname: mq-qm1
+    environment:
+      <<: *ibmmq-env
+      MQ_QMGR_NAME: QM1
+    ports:
+      - "${MQ_QM1_PORT:-1414}:1414"
+      - "${MQ_QM1_WEB_PORT:-9443}:9443"
+    volumes:
+      - './volumes/qm1:/mnt/mqm'
+
+  mq-qm2:
+    <<: *ibmmq
+    container_name: mq-qm2
+    hostname: mq-qm2
+    environment:
+      <<: *ibmmq-env
+      MQ_QMGR_NAME: QM2
+    ports:
+      - "${MQ_QM2_PORT:-1415}:1414"
+      - "${MQ_QM2_WEB_PORT:-9444}:9443"
+    volumes:
+      - './volumes/qm2:/mnt/mqm'
+
+  mq-portal:
+    image: python:3.13-alpine
+    container_name: mq-portal
+    restart: unless-stopped
+    user: "1000:1000"
+    command: python /app/web/server.py
+    depends_on:
+      - mq-qm1
+      - mq-qm2
+    networks:
+      - apps
+    ports:
+      - "127.0.0.1:${MQ_PORTAL_PORT:-9445}:8080"
+    environment:
+      MQ_ADMIN_PASSWORD: ${MQ_ADMIN_PASSWORD}
+      PYTHONDONTWRITEBYTECODE: "1"
+    volumes:
+      - './web:/app/web:ro'
+      - './volumes/portal:/data'
