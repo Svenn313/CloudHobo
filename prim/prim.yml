@@ -1,0 +1,24 @@
+## PRIM ##
+services:
+  prim:
+    build: ./volumes/build
+    image: prim:local
+    container_name: prim
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+    volumes:
+      - './volumes/config.yml:/config/config.yml:ro'
+    environment:
+      TZ: Europe/Paris
+      CONFIG_PATH: /config/config.yml
+      PRIM_API_KEY: ${PRIM_API_KEY}
+      TELEGRAM_BOT_TOKEN: ${PRIM_TELEGRAM_BOT_TOKEN}
+      TELEGRAM_CHAT_ID: ${PRIM_TELEGRAM_CHAT_ID}
+    networks:
+      - apps
+    dns:
+      - '${HOST_URL}'  # Pi-hole for local DNS resolution
+      - '1.1.1.1'      # Cloudflare fallback
