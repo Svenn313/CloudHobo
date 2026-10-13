@@ -19,6 +19,8 @@ This repo contains all the configuration files to spin up my services.
 | **Pihole** | Network-wide ad blocker / DNS |
 | **PostgreSQL** | Database backend |
 | **Postfix** | SMTP Server |
+| **PRIM** | Alertes Telegram retards/suppressions trains (API PRIM IDFM) |
+| **IBM MQ** | 2 queue managers (QM1, QM2) with web console |
 
 ## Usage
 

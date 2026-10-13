@@ -23,6 +23,8 @@ include:
   - dozzle/dozzle.yml
   - beszel/beszel.yml
   - wiremission/wiremission.yml
+  - prim/prim.yml
+  - ibmmq/ibmmq.yml
   
   # ┌─────────────────────────────────────┐
   # │          DISABLED SERVICES          │
