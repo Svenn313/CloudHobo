@@ -152,15 +152,15 @@ function renderDay() {
   const d = PROGRAM.find(x => x.day === viewing);
   const done = state.validated[String(viewing)];
   const isCurrent = viewing === state.current;
-  const before = d.steps.filter(s => !s.after);
-  const after = d.steps.filter(s => s.after);
+  const before = d.steps.filter(s => !s.after && s.link);
+  const after = d.steps.filter(s => s.after && s.link);
   const html = [];
   html.push(`<div class="kicker">Jour ${d.day} sur ${state.last}${done ? '<span class="badge">Validé</span>' : isCurrent ? '<span class="badge" style="background:var(--bg);color:var(--accent)">Exercice du jour</span>' : ''}</div>`);
   html.push(`<h2>${esc(d.title)}</h2><div class="meta">⏱ environ ${d.minutes} minutes</div>`);
   html.push(`<p class="goal">${fmt(d.goal)}</p>`);
   html.push(`<h3 class="sec">À retenir</h3>${d.learn.map(p => `<p>${fmt(p)}</p>`).join('')}`);
   if (d.challenge) html.push(`<h3 class="sec">Ton défi</h3><ul class="plain">${d.challenge.map(c => `<li>${fmt(c)}</li>`).join('')}</ul>`);
-  if (before.length) html.push(`<h3 class="sec">À faire</h3>${before.map(stepHtml).join('')}`);
+  if (before.length) html.push(`<h3 class="sec">Outils</h3>${before.map(stepHtml).join('')}`);
   if (d.questions?.length) html.push(`<h3 class="sec">Pour y réfléchir</h3><ul class="plain">${d.questions.map(q => `<li>${fmt(q)}</li>`).join('')}</ul>`);
 
   html.push('<section class="check" id="check"><h3>Checkpoint</h3>');
