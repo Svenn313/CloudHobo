@@ -3,7 +3,7 @@ services:
 # Synapse
 # ------------------------
   synapse:
-    image: matrixdotorg/synapse:v1.157.2
+    image: matrixdotorg/synapse:v1.164.1
     container_name: matrix
     restart: unless-stopped
     ports:
@@ -21,7 +21,7 @@ services:
 # Synapse-admin
 #------------------------
   synapse-admin:
-    image: ghcr.io/etkecc/synapse-admin:v0.10.4-etke40
+    image: etkecc/synapse-admin:v1.5.2
     container_name: synapse-admin
     restart: unless-stopped
     ports:
@@ -50,7 +50,7 @@ services:
 # Matrix Authentication Service
 # ------------------------
   mas:
-    image: ghcr.io/element-hq/matrix-authentication-service:1.24.0
+    image: ghcr.io/element-hq/matrix-authentication-service:1.28.0
     container_name: mas
     restart: unless-stopped
     command: ["server", "--config", "/config.yaml"]
