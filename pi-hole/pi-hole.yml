@@ -1,7 +1,7 @@
 ## PI-HOLE ##
 services:
   pihole:
-    image: pihole/pihole:2025.10.2
+    image: pihole/pihole:2026.10.0
     container_name: pihole
     restart: unless-stopped
     network_mode: host  # Required to intercept DNS traffic
