@@ -18,7 +18,7 @@ services:
 
   paperless-webserver:
     container_name: paperless-webserver
-    image: ghcr.io/paperless-ngx/paperless-ngx:3.1
+    image: ghcr.io/paperless-ngx/paperless-ngx:3.4.0
     restart: unless-stopped
     depends_on:
       - paperless-broker
