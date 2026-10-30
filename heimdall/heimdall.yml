@@ -1,7 +1,7 @@
 ##HEIMDALL##
 services:
   heimdall:
-    image: lscr.io/linuxserver/heimdall:2.6.3
+    image: lscr.io/linuxserver/heimdall:2.8.4
     container_name: heimdall
     restart: unless-stopped
     environment:
