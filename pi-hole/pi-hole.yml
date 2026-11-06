@@ -20,6 +20,13 @@ services:
       VIRTUAL_HOST: pihole.${DOMAIN_NAME}
       TZ: 'Europe/Paris'
       FTLCONF_dns_listeningMode: 'ALL'
+      # never forward plain names (no dot) or local hostnames upstream
+      FTLCONF_dns_domainNeeded: 'true'
+      FTLCONF_dns_expandHosts: 'true'
+      # split-horizon: any *.${DOMAIN_NAME} (and the apex) resolves to this host
+      # on the LAN, so nginx vhosts work at home without a trip through the box.
+      # new services need no DNS change. exclude one with: server=/sub.${DOMAIN_NAME}/#
+      FTLCONF_misc_dnsmasq_lines: 'address=/${DOMAIN_NAME}/${HOST_URL}'
     volumes:
       - './volumes:/etc/pihole'
 
