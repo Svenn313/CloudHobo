@@ -11,6 +11,7 @@ services:
   paperless-bridge-relay:
     container_name: paperless-mailbridge
     image: alpine/socat
+    restart: unless-stopped
     network_mode: "service:paperless-webserver"
     command: TCP-LISTEN:1143,fork,reuseaddr TCP:protonmail-bridge:143
     depends_on:
