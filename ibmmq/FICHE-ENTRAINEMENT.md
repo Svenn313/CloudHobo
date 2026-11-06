@@ -1,7 +1,7 @@
 # Fiche d'entraînement IBM MQ (profil DevOps)
 
 Environnement : deux queue managers dans Docker, `QM1` (conteneur `mq-qm1`) et `QM2` (conteneur `mq-qm2`).
-Consoles web : https://mq1.svenlabs.fr/ibmmq/console/ et https://mq2.svenlabs.fr/ibmmq/console/ (login `admin`).
+Consoles web : https://mq1.larlar.fr/ibmmq/console/ et https://mq2.larlar.fr/ibmmq/console/ (login `admin`).
 
 Les commandes marquées `$` se lancent depuis l'hôte. Les commandes `runmqsc` se tapent dans un shell MQSC interactif :
 

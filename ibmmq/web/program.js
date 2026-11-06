@@ -63,7 +63,7 @@ const PROGRAM = [
     steps: [
       { t: "Crée la queue :", mq: ['QM1', "DEFINE QLOCAL(TEST.QUEUE) DESCR('ma premiere queue') MAXDEPTH(100)"] },
       { t: "Vérifie ses attributs :", mq: ['QM1', 'DISPLAY QLOCAL(TEST.QUEUE) CURDEPTH MAXDEPTH DESCR'] },
-      { t: "Ouvre la console web de QM1 (login `admin`), va dans **Queues** et retrouve `TEST.QUEUE` :", link: ['https://mq1.svenlabs.fr/ibmmq/console/', 'Console QM1'] },
+      { t: "Ouvre la console web de QM1 (login `admin`), va dans **Queues** et retrouve `TEST.QUEUE` :", link: ['https://mq1.larlar.fr/ibmmq/console/', 'Console QM1'] },
     ],
     verify: ["`TEST.QUEUE` existe sur QM1 avec `MAXDEPTH(100)` et une description"],
     questions: [

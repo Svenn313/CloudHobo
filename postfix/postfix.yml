@@ -28,7 +28,7 @@ services:
       - RELAYHOST_USERNAME=${PROTON_EMAIL}
       - RELAYHOST_PASSWORD=${PROTON_BRIDGE_PASSWORD}
       - POSTFIX_mynetworks=${SMTP_NETWORKS}
-      - ALLOWED_SENDER_DOMAINS=svenlabs.fr
+      - ALLOWED_SENDER_DOMAINS=larlar.fr svenlabs.fr protonmail.com
       - POSTFIX_sender_canonical_maps=static:${PROTON_EMAIL}
       - POSTFIX_sender_canonical_classes=envelope_sender,header_sender
       - POSTFIX_smtpd_tls_security_level=none
