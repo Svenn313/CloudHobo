@@ -29,15 +29,7 @@ include:
   # ┌─────────────────────────────────────┐
   # │          DISABLED SERVICES          │
   # └─────────────────────────────────────┘
-  # - cadvisor/cadvisor.yml
-  # - diun/diun.yml
-  # - grafana/grafana.yml
-  # - prometheus/prometheus.yml
-  # - vaultwarden/vaultwarden.yml
   # - wireguard/wireguard.yml
-  # - signal/Signal.yml
-  # - hedgedoc/hedgedoc.yml
-  # - teamspeak/teamspeak.yml
 
 networks:
   web:
