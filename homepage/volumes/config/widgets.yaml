@@ -1,0 +1,25 @@
+- greeting:
+    text_size: 2xl
+    text: Bonjour Sven
+- datetime:
+    text_size: xl
+    locale: fr
+    format:
+      dateStyle: long
+      timeStyle: short
+      hourCycle: h23
+- openmeteo:
+    label: Paris
+    latitude: 48.85
+    longitude: 2.35
+    timezone: Europe/Paris
+    units: metric
+    cache: 5
+- resources:
+    cpu: true
+    memory: true
+    disk: /
+    uptime: true
+- search:
+    provider: duckduckgo
+    target: _blank

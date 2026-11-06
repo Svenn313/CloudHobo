@@ -1,0 +1,90 @@
+- Mes sites:
+    - Matrix:
+        icon: matrix.png
+        href: https://matrix.{{HOMEPAGE_VAR_DOMAIN}}
+        description: Messagerie (Element + bridges)
+        container: matrix
+        server: local
+    - Jellyfin:
+        icon: jellyfin.png
+        href: https://jellyfin.{{HOMEPAGE_VAR_DOMAIN}}
+        description: Films et séries
+        container: jellyfin
+        server: local
+    - Paperless:
+        icon: paperless-ngx.png
+        href: https://paperless.{{HOMEPAGE_VAR_DOMAIN}}
+        description: Documents
+        container: paperless-webserver
+        server: local
+    - Mealie:
+        icon: mealie.png
+        href: https://mealie.{{HOMEPAGE_VAR_DOMAIN}}
+        description: Recettes
+        container: mealie
+        server: local
+    - Joplin:
+        icon: joplin.png
+        href: https://joplin.{{HOMEPAGE_VAR_DOMAIN}}
+        description: Notes
+        container: joplin
+        server: local
+    - IBM MQ:
+        icon: ibm.png
+        href: https://mq.{{HOMEPAGE_VAR_DOMAIN}}
+        description: Entraînement MQ
+        container: mq-portal
+        server: local
+    - Heimdall:
+        icon: heimdall.png
+        href: https://heimdall.{{HOMEPAGE_VAR_DOMAIN}}
+        description: Ancien dashboard
+        container: heimdall
+        server: local
+
+- Maison & réseau:
+    - Home Assistant:
+        icon: home-assistant.png
+        href: https://homeassistant.{{HOMEPAGE_VAR_DOMAIN}}
+        description: Domotique
+        container: homeassistant
+        server: local
+        widget:
+          type: homeassistant
+          url: http://host.docker.internal:8123
+          key: "{{HOMEPAGE_VAR_HA_TOKEN}}"
+    - Pi-hole:
+        icon: pi-hole.png
+        href: https://pihole.{{HOMEPAGE_VAR_DOMAIN}}
+        description: DNS / blocage pub
+        container: pihole
+        server: local
+        widget:
+          type: pihole
+          url: http://host.docker.internal:8081
+          version: 6
+          key: "{{HOMEPAGE_VAR_PIHOLE_KEY}}"
+    - Box:
+        icon: bbox.png
+        href: https://box.{{HOMEPAGE_VAR_DOMAIN}}
+        description: Routeur Bbox
+
+- Monitoring:
+    - Beszel:
+        icon: beszel.png
+        href: https://beszel.{{HOMEPAGE_VAR_DOMAIN}}
+        description: Stats serveur
+        container: beszel
+        server: local
+    - Dozzle:
+        icon: dozzle.png
+        href: https://dozzle.{{HOMEPAGE_VAR_DOMAIN}}
+        description: Logs Docker
+        container: dozzle
+        server: local
+    - Synapse Admin:
+        icon: matrix.png
+        href: https://synapse-admin.{{HOMEPAGE_VAR_DOMAIN}}
+        description: Admin Matrix
+        container: synapse-admin
+        server: local

@@ -3,6 +3,7 @@ include:
   # │           ACTIVE SERVICES           │
   # └─────────────────────────────────────┘
   - heimdall/heimdall.yml
+  - homepage/homepage.yml
   - homeassistant/homeassistant.yml
   - matrix/matrix.yml
   - matrix/bridges/mautrix-telegram/mautrix-telegram.yml

@@ -67,3 +67,6 @@ override.tf.json
 .terraformrc
 terraform.rc
 
+## exceptions: Homepage config (aucun secret, utilise des variables d'environnement)
+!homepage/volumes/
+!homepage/volumes/config/

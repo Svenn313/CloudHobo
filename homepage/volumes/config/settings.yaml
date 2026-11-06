@@ -1,0 +1,19 @@
+title: Homelab
+theme: dark
+color: slate
+headerStyle: boxed
+statusStyle: dot
+hideVersion: true
+quicklaunch:
+  searchDescriptions: true
+  hideInternetSearch: false
+layout:
+  Mes sites:
+    style: row
+    columns: 4
+  Maison & réseau:
+    style: row
+    columns: 3
+  Monitoring:
+    style: row
+    columns: 3

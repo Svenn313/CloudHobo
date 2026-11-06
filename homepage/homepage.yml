@@ -1,0 +1,25 @@
+##HOMEPAGE##
+services:
+  homepage:
+    image: ghcr.io/gethomepage/homepage:v2.7.0
+    container_name: homepage
+    restart: unless-stopped
+    group_add:
+      - "984" # docker (accès au socket)
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Paris
+      - HOMEPAGE_VAR_DOMAIN=${DOMAIN_NAME}
+      - HOMEPAGE_VAR_PIHOLE_KEY=${PIHOLE_API_PASSWORD}
+      - HOMEPAGE_VAR_HA_TOKEN=${HOMEPAGE_HA_TOKEN:-}
+      - HOMEPAGE_ALLOWED_HOSTS=localhost:6060,127.0.0.1:6060,${DOMAIN_NAME}
+    volumes:
+      - './volumes/config:/app/config'
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    extra_hosts:
+      - host.docker.internal:host-gateway # Pi-hole et Home Assistant sont en network_mode: host
+    ports:
+      - 127.0.0.1:6060:3000
+    networks:
+      - apps
