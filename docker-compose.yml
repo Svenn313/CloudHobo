@@ -2,8 +2,8 @@ include:
   # ┌─────────────────────────────────────┐
   # │           ACTIVE SERVICES           │
   # └─────────────────────────────────────┘
-  - heimdall/heimdall.yml
-  - homepage/homepage.yml
+  - homarr/homarr.yml
+  - adminer/adminer.yml
   - homeassistant/homeassistant.yml
   - matrix/matrix.yml
   - matrix/bridges/mautrix-telegram/mautrix-telegram.yml

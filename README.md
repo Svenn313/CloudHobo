@@ -14,8 +14,8 @@ This repo contains all the configuration files to spin up my services.
 | **Synapse Admin** | Admin UI for Synapse |
 | **Joplin** | Self-hosted note syncing server |
 | **Mealie** | Recipe manager & meal planner |
-| **Heimdall** | Dashboard for all services |
-| **Homepage** | Modern dashboard with live Docker status |
+| **Homarr** | Dashboard for all services (home.larlar.fr) |
+| **Adminer** | Lightweight web UI for PostgreSQL (db.larlar.fr, LAN only) |
 | **Home Assistant** | Home automation |
 | **Pihole** | Network-wide ad blocker / DNS |
 | **PostgreSQL** | Database backend |

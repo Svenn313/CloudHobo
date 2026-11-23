@@ -1,0 +1,24 @@
+##HOMARR##
+services:
+  homarr:
+    image: ghcr.io/homarr-labs/homarr:v2.12.0
+    container_name: homarr
+    restart: unless-stopped
+    environment:
+      - TZ=Europe/Paris
+      - SECRET_ENCRYPTION_KEY=${HOMARR_SECRET_KEY}
+      - DB_DIALECT=postgresql
+      - DB_DRIVER=node-postgres
+      - DB_URL=postgres://homarr:${HOMARR_DB_PASS}@postgres:5432/homarr
+    extra_hosts:
+      - host.docker.internal:host-gateway # Pi-hole et Home Assistant sont en network_mode: host
+    volumes:
+      - './volumes/appdata:/appdata' # icônes, uploads (la base est dans Postgres)
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    ports:
+      - 127.0.0.1:6060:7575
+    networks:
+      - apps
+    dns:
+      - '${HOST_URL}'  # Pi-hole : split-horizon *.${DOMAIN_NAME}
+      - '1.1.1.1'      # fallback Cloudflare

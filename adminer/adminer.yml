@@ -1,0 +1,13 @@
+##ADMINER##
+services:
+  adminer:
+    image: adminer:6.3.0
+    container_name: adminer
+    restart: unless-stopped
+    environment:
+      - ADMINER_DEFAULT_SERVER=postgres
+      - ADMINER_DESIGN=pepa-linha-dark
+    ports:
+      - 127.0.0.1:6070:8080
+    networks:
+      - apps
