@@ -5,6 +5,8 @@ services:
     container_name: pihole
     restart: unless-stopped
     network_mode: host  # Required to intercept DNS traffic
+    depends_on:
+      - unbound
     shm_size: '256m'
     cap_add:
       - NET_ADMIN   # Required for DNS and DHCP
@@ -27,6 +29,24 @@ services:
       # on the LAN, so nginx vhosts work at home without a trip through the box.
       # new services need no DNS change. exclude one with: server=/sub.${DOMAIN_NAME}/#
       FTLCONF_misc_dnsmasq_lines: 'address=/${DOMAIN_NAME}/${HOST_URL}'
+      # recursive resolution through local unbound: no third-party resolver
+      # (quad9 stopped serving france on 2026-11-24: "french legal constraints")
+      FTLCONF_dns_upstreams: '127.0.0.1#5335'
     volumes:
       - './volumes:/etc/pihole'
 
+
+  # recursive resolver, queries the root servers directly (dnssec validated)
+  unbound:
+    image: klutchell/unbound:1.26.2
+    container_name: unbound
+    restart: unless-stopped
+    ports:
+      - 127.0.0.1:5335:53/udp
+      - 127.0.0.1:5335:53/tcp
+    healthcheck:
+      test: ["CMD", "drill-hc", "@127.0.0.1", "dnssec.works"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+      start_period: 30s

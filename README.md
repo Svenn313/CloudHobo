@@ -18,6 +18,7 @@ This repo contains all the configuration files to spin up my services.
 | **Adminer** | Lightweight web UI for PostgreSQL (db.larlar.fr, LAN only) |
 | **Home Assistant** | Home automation |
 | **Pihole** | Network-wide ad blocker / DNS |
+| **Unbound** | Recursive DNS resolver behind Pihole (no third-party upstream) |
 | **PostgreSQL** | Database backend |
 | **Postfix** | SMTP Server |
 | **PRIM** | Alertes Telegram retards/suppressions trains (API PRIM IDFM) |
